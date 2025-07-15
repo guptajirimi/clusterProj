@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import com.example.springbootdemo.repository.InvoiceDtlRepo;
 
 @RestController
 @RequestMapping("/api/invoice")
+@CrossOrigin(origins = "http://localhost:3000") // Allow React
+
 public class InvoiceCNT {
 @Autowired
 private InvoiceDtlRepo invoiceRepo;
@@ -27,6 +30,12 @@ public InvoiceDtlEntity createInvoice(@RequestBody InvoiceDtlFB fb) {
 	invoice.setStrCostomerName(fb.getStrCostomerName());
 	invoice.setStrInvoiceDate(fb.getStrInvoiceDate());
 	invoice.setStrTotalAmount(fb.getStrTotalAmount());
+	invoice.setStrStoreName(fb.getStrStoreName());
+	invoice.setStrIssuerName(fb.getStrIssuerName());
+	invoice.setStrAddress(fb.getStrAddress());
+	invoice.setStrPhonenumber(fb.getStrPhonenumber());
+	
+	
 	
 	 List<InvoiceItemDtlEntity> items = new ArrayList<>();
      for (InvoiceItemDtlFB itemFB : fb.getItems()) {

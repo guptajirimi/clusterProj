@@ -23,7 +23,10 @@ private LocalDate strInvoiceDate;
 private Double strTotalAmount;
 @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
 private List<InvoiceItemDtlEntity> items;
-
+private String strStoreName;
+private String strIssuerName;
+private String strAddress;
+private String strPhonenumber;
 
 
 public Long getId() {
@@ -55,6 +58,30 @@ public void setItems(List<InvoiceItemDtlEntity> items) {
 }
 public List<InvoiceItemDtlEntity> getItems() {
     return items;
+}
+public String getStrStoreName() {
+	return strStoreName;
+}
+public void setStrStoreName(String strStoreName) {
+	this.strStoreName = strStoreName;
+}
+public String getStrIssuerName() {
+	return strIssuerName;
+}
+public void setStrIssuerName(String strIssuerName) {
+	this.strIssuerName = strIssuerName;
+}
+public String getStrAddress() {
+	return strAddress;
+}
+public void setStrAddress(String strAddress) {
+	this.strAddress = strAddress;
+}
+public String getStrPhonenumber() {
+	return strPhonenumber;
+}
+public void setStrPhonenumber(String strPhonenumber) {
+	this.strPhonenumber = strPhonenumber;
 }
 
 }
