@@ -1,5 +1,6 @@
 import './App.css';
 import Home from "./components/Home";
+import Login from './components/Login';
 import MyForm from './components/MyForm';
 import ResumeBuilder from './components/ResumeBuilder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -8,7 +9,8 @@ import { Container, Row, Col } from 'reactstrap';
 function App() {
   return (
     <Router>
-      <Container fluid>
+    <Login/>
+      {/* <Container fluid>
         <Row>
           
           <Col md="4" style={{ backgroundColor: 'pink', borderRadius: '10px', padding: '15px' }}>
@@ -26,7 +28,7 @@ function App() {
             </Routes>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </Router>
   );
 }
