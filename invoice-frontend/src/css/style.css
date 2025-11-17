@@ -1,76 +1,84 @@
-/* Main background wrapper */
+/* MAIN WRAPPER */
 .main-login {
-    background-image: url(../images/dailywork.jpg);  
-  background-size: cover;
-  background-position: center;
-  height: 90vh; /* full background height */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;  /* parent as relative */
-}
-
-/* Dark overlay so content pops */
-.main-login::before {
-  content: "";
-  position: absolute;  /* child as absolute and it can be rotated anywhere in parent as parent will not move */
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 0;
-}
-
-/* Left section – optional, can hold logo or remain blank */
-#left-login {
-  flex: 1;
-  background: transparent;
-  z-index: 1;
-}
-
-/* Right section – smaller box, centered vertically */
-#right-login {
-  width: 40%;                /* make it smaller */
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  padding: 30px;
-  z-index: 1;
-  color: black;
-}
-
-/* Inner content */
-#contentsec {
-  text-align: center;
+  height: 100vh;
   width: 100%;
-  max-width: 400px;
-color: black;
+  position: relative;
+  overflow: hidden;
 }
 
+/* LEFT SIDE – LOTTIE ANIMATION AREA */
+#left-login {
+  flex: 1.2;
+  background-color: #f7faff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+}
+
+#welcome-animation {
+  width: 80%;
+  max-width: 450px;
+}
+
+/* RIGHT SIDE – LOGIN FORM BOX */
+#right-login {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-left: 1px solid #e5e5e5;
+}
+
+/* LOGIN INNER CONTENT */
+#contentsec {
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}
+
+#contentsec img {
+  width: 70px;
+  margin-bottom: 15px;
+}
+
+#contentsec h3 {
+  font-size: 26px;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+#contentsec h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: gray;
+}
+
+/* INPUTS */
 #contentsec input,
 #contentsec select {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 5px;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-#contentsec button {
-  flex: 1;                        /* make both buttons equal width */
-  font-weight: 600;
-}
-.btn-container{
-    display: flex;
-  justify-content: space-between; 
-  gap: 10px;                       
+/* BUTTONS GROUP */
+.btn-container {
+  display: flex;
+  gap: 12px;
   margin-top: 15px;
-
 }
-/* Adjust image size properly */
-#contentsec img {
-  width: 50px;
-  height: auto;
-  margin-bottom: 15px;
-  
+
+.btn-container button {
+  flex: 1;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 8px;
 }
