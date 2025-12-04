@@ -14,7 +14,7 @@ const imageHandle=(e)=>
   {
     const reader=new FileReader();
     reader.onload=()=>{
-      document.querySelector(".mainResumeBoxHeaderImg").style.backgroungImg=`url(${reader.result})`
+      document.querySelector(".mainResumeBoxHeaderImg").style.backgroundImage=`url(${reader.result})`
     };
     reader.readAsDataURL(file);
 
@@ -22,15 +22,36 @@ const imageHandle=(e)=>
 
 
 }
+
+const[expList,setExpList]=useState([]);
+
+
 const addDynamicLiSecForExp=()=>
 {
-
+  setExpList([...expList,""]);
 }
+
+const[educationList,setEducationList]=useState([]);
 const addDynamicLiSecForEducation=()=>
 {
-
+  setEducationList([...educationList,""]);
 }
-
+const addSkills=()=>
+{
+  setEducationList([...educationList,""]);
+}
+const addPersonalproject=()=>
+{
+  setEducationList([...educationList,""]);
+}
+const addAchivement=()=>
+{
+  setEducationList([...educationList,""]);
+}
+const addLanguage=()=>
+{
+  setEducationList([...educationList,""]);
+}
 
   return (
     <div className="mainResumeBox">
@@ -38,7 +59,8 @@ const addDynamicLiSecForEducation=()=>
       <div className="mainResumeBoxHeader">
 
         <div className="mainResumeBoxHeaderImg">
-          <a href="#" onClick={imageHandle} placeholder="Click hear to browse image" name="img" id="img"></a>
+          <input type="file" accept="image/*" onChange={imageHandle}   name="img" id="img" style={{ display: "none" }}/> 
+          <label htmlFor="img" style={{ cursor: "pointer" }}> Browse</label>
         </div>
 
         <div className="mainResumeBoxHeaderIntro">
@@ -69,7 +91,14 @@ const addDynamicLiSecForEducation=()=>
           </div>
 
           <div className="dynamicLiSection">
-            <i className="fa fa-plus" onClick={addDynamicLiSecForExp}></i>
+            <ul>
+               {expList.map((item,index)=>(
+                  <li key={index}>
+                      <input placeholder="Enter Experience"/>
+                  </li>
+               ))}
+            </ul>
+             <i className="fa fa-plus" onClick={addDynamicLiSecForExp}></i>
           </div>
         </div>
       <h3>Education</h3>
@@ -80,6 +109,14 @@ const addDynamicLiSecForEducation=()=>
           </div>
 
           <div className="dynamicLiSection">
+            <ul>
+               {educationList.map((item,index)=>
+               (
+                <li key={index}>
+                  <input placeholder="Enter Education" />
+                </li>
+               ))}
+            </ul>
             <i className="fa fa-plus" onClick={addDynamicLiSecForEducation}></i>
           </div>
         </div>
@@ -87,7 +124,27 @@ const addDynamicLiSecForEducation=()=>
       </div>
 
       <div className="mainResumeBoxRightSec">
-        {/* skill-personalproject-achivement-lang-intest */}
+        {/* skill-personalproject-achivement-lang*/}
+        <h3>Skill</h3>
+        <div className="RightSecSkill"> 
+
+                <i className="fa fa-plus" onClick={addSkills}></i>
+        </div>
+        <div className="RightSecPersonalproject"> 
+               <ul>
+
+               </ul>
+               <i className="fa fa-plus" onClick={addPersonalproject}></i>
+        </div>
+        <div className="RightSecAchivement"> 
+                <ul>
+                  
+               </ul>
+               <i className="fa fa-plus" onClick={addAchivement}></i>
+        </div>
+        <div className="RightSecLang"> 
+               <i className="fa fa-plus" onClick={addLanguage}></i>
+        </div>
       </div>
 
     </div>
