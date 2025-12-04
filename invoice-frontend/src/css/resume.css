@@ -1,0 +1,270 @@
+/* ResumeBuilder.css */
+
+/* --- Page layout & typography --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap');
+
+:root{
+  --page-width: 800px;        /* A4-ish width for screen */
+  --accent: #0b66ff;         /* small accent color */
+  --muted: #6b7280;
+  --paper-bg: #ffffff;
+  --edge-radius: 8px;
+  --gutter: 20px;
+  --shadow: 0 6px 18px rgba(13, 35, 73, 0.08);
+}
+
+/* center resume on screen */
+body {
+  background: #f3f6fb;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+/* main card */
+.mainResumeBox {
+  width: var(--page-width);
+  background: var(--paper-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 26px;
+  color: #111827;
+  box-sizing: border-box;
+  counter-reset: section;
+}
+
+/* header: image + name */
+.mainResumeBoxHeader {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #e6e9ef;
+  padding-bottom: 18px;
+}
+
+/* profile image area */
+.mainResumeBoxHeaderImg {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg,#f2f6ff,#ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px dashed #e1e6f8;
+  cursor: pointer;
+}
+
+/* if an <img> inside is present it will fit */
+.mainResumeBoxHeaderImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* name + short note */
+.mainResumeBoxHeaderIntro {
+  flex: 1;
+}
+.mainResumeBoxHeaderIntro input#nameHolder {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  margin-bottom: 6px;
+  background: transparent;
+  color: #0f172a;
+}
+.mainResumeBoxHeaderIntro textarea#shortNote {
+  display: block;
+  width: 100%;
+  border: none;
+  resize: vertical;
+  min-height: 48px;
+  max-height: 120px;
+  color: var(--muted);
+  background: transparent;
+  font-family: "Merriweather", serif;
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 0;
+}
+
+/* contact row */
+.addressCityPhoneSec {
+  display: flex;
+  gap: 12px;
+  margin: 14px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.addressCityPhoneSec span {
+  flex: 1;
+}
+.addressCityPhoneSec input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #eef2f7;
+  background: transparent;
+  padding: 6px 4px;
+  color: #263238;
+  font-size: 13px;
+}
+
+/* two-column body */
+.mainResumeBoxLeftSec,
+.mainResumeBoxRightSec {
+  box-sizing: border-box;
+}
+
+/* layout: left & right columns */
+.mainResumeBoxLeftSec {
+  width: 58%;
+  float: left;
+  padding-right: 18px;
+  min-height: 260px;
+}
+.mainResumeBoxRightSec {
+  width: 40%;
+  float: right;
+  padding-left: 18px;
+  border-left: 1px solid #f1f4f8;
+  min-height: 260px;
+}
+
+/* section styles (shared) */
+.leftSecExpSec,
+.leftSecEducationSec {
+  margin-bottom: 16px;
+  background: transparent;
+}
+.leftSecExpSec > div:first-child,
+.leftSecEducationSec > div:first-child {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+/* section heading style when users type text (we're keeping structure) */
+.leftSecExpSec input[placeholder],
+.leftSecEducationSec input[placeholder] {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  padding: 6px 0;
+  color: #0f172a;
+}
+
+/* dynamic list rows */
+.dynamicLiSection {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.dynamicLiSection .entry {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:8px;
+  background:#fbfcff;
+  border:1px solid #eef2f7;
+}
+.dynamicLiSection .entry input[type="text"],
+.dynamicLiSection .entry input[type="date"],
+.dynamicLiSection .entry input[type="checkbox"]{
+  border:none;
+  background:transparent;
+  font-size:13px;
+}
+.dynamicLiSection .entry .role {
+  font-weight:600;
+  font-size:14px;
+  color:#0b1320;
+}
+
+/* plus icon style */
+.dynamicLiSection i.fa-plus {
+  display:inline-flex;
+  width:34px;
+  height:34px;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  background:#f1f5ff;
+  border:1px dashed #dbe7ff;
+  cursor:pointer;
+}
+
+/* right column: skill boxes */
+.mainResumeBoxRightSec {
+  padding-top:4px;
+}
+.mainResumeBoxRightSec .box {
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:8px;
+  background:#fbfdff;
+  border:1px solid #eef3ff;
+}
+.mainResumeBoxRightSec .box h4 {
+  margin:0 0 8px 0;
+  font-size:14px;
+  font-weight:700;
+}
+.mainResumeBoxRightSec .skill {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.mainResumeBoxRightSec .skill .pill {
+  font-size:12px;
+  padding:6px 8px;
+  border-radius:999px;
+  background:#f1f6ff;
+  border:1px solid #e6eefc;
+}
+
+/* clear floats */
+.mainResumeBox::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* subtle print-friendly adjustments */
+@media print {
+  body { background: #fff; padding: 0; }
+  .mainResumeBox {
+    width: 210mm; /* full A4 width in print */
+    box-shadow: none;
+    border-radius: 0;
+    padding: 18mm;
+  }
+  .dynamicLiSection .entry { page-break-inside: avoid; }
+  .dynamicLiSection i.fa-plus { display:none; } /* hide interactive icons in print */
+}
+
+/* small screens — stack columns */
+@media (max-width: 820px) {
+  .mainResumeBox {
+    width: 100%;
+    padding: 18px;
+  }
+  .mainResumeBoxLeftSec,
+  .mainResumeBoxRightSec {
+    width: 100%;
+    float: none;
+    padding: 0;
+    border-left: none;
+  }
+}

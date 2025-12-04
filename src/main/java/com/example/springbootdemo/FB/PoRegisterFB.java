@@ -1,9 +1,10 @@
 package com.example.springbootdemo.FB;
 
 public class PoRegisterFB {
-
+ 
     
 	private static final long serialVersionUID = 1L;
+ 
 	private String strErrMsg = "";
 	private String strPurchaseOrderRptData = "";
 	private String strNormalMsg = "";
@@ -393,7 +394,10 @@ public class PoRegisterFB {
 		return serialVersionUID;
 	}
 
+<<<<<<< HEAD
 
 
     
+=======
+>>>>>>> 9e2580bb4f6744fb47550d2aab448de2a4766571
 }

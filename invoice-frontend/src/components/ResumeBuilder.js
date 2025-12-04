@@ -3,155 +3,94 @@ import { ToastContainer, toast } from "react-toastify";
 import { Button, Container, Input } from "reactstrap";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import "../css/resume.css";
 
 function ResumeBuilder() {
-  const [resume, setResume] = useState({
-    name: "",
-    email: "",
-    address: "",
-    phoneNo: "",
-    experience: "",
-    education: "",
-    project: "",
-    hobbies: "",
-    skills: "",
-  });
+const imageHandle=(e)=>
+{
+  const file=e.target.files ? e.target.files[0] :null;
 
-  const clearPage = () => {
-    setResume({
-      name: "",
-      email: "",
-      address: "",
-      phoneNo: "",
-      experience: "",
-      education: "",
-      project: "",
-      hobbies: "",
-      skills: "",
-    });
-  };
+  if(file)
+  {
+    const reader=new FileReader();
+    reader.onload=()=>{
+      document.querySelector(".mainResumeBoxHeaderImg").style.backgroungImg=`url(${reader.result})`
+    };
+    reader.readAsDataURL(file);
 
-  const Download = () => {
-     const input=document.getElementById("resume-content");
-     html2canvas(input).then((canvas) => {
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-    pdf.addImage(imgData, "PNG", 0, 0);
-    pdf.save(`${resume.name}_Resume.pdf`);
-  });
-  };
+  }
 
-  const save = () => {
-    toast.success("Saved Successfully");
-  };
 
-  const handleChange = (e) => {
-    setResume({ ...resume, [e.target.name]: e.target.value });
-  };
+}
+const addDynamicLiSecForExp=()=>
+{
+
+}
+const addDynamicLiSecForEducation=()=>
+{
+
+}
+
 
   return (
-    <Container style={{ maxWidth: "600px", marginTop: "20px" }}  id="resume-content">
-      <ToastContainer />
-      <h2 className="text-center mb-4">Resume Builder</h2>
+    <div className="mainResumeBox">
 
-      <Input
-        type="text"
-        name="name"
-        placeholder="Enter your name"
-        className="mb-2"
-        value={resume.name}
-        onChange={handleChange}
-      />
+      <div className="mainResumeBoxHeader">
 
-      <h4>Personal Details</h4>
-      <Input
-        type="email"
-        name="email"
-        placeholder="Email"
-        className="mb-2"
-        value={resume.email}
-        onChange={handleChange}
-      />
-      <Input
-        type="textarea"
-        name="address"
-        placeholder="Address"
-        className="mb-2"
-        value={resume.address}
-        onChange={handleChange}
-      />
-      <Input
-        type="text"
-        name="phoneNo"
-        placeholder="Phone number"
-        className="mb-4"
-        value={resume.phoneNo}
-        onChange={handleChange}
-      />
-      
+        <div className="mainResumeBoxHeaderImg">
+          <a href="#" onClick={imageHandle} placeholder="Click hear to browse image" name="img" id="img"></a>
+        </div>
 
-      <h4>Experience</h4>
-      <Input
-        type="textarea"
-        name="experience"
-        placeholder="Your work experience"
-        className="mb-2"
-        value={resume.experience}
-        onChange={handleChange}
-      />
+        <div className="mainResumeBoxHeaderIntro">
+          <div>
+            <input placeholder="Enter Name" name="nameHolder" id="nameHolder" />
+          </div>
 
-      <h4>Education</h4>
-      <Input
-        type="textarea"
-        name="education"
-        placeholder="Your educational background"
-        className="mb-2"
-        value={resume.education}
-        onChange={handleChange}
-      />
+          <div>
+            <textarea placeholder="Short Note" name="shortNote" id="shortNote"></textarea>
+          </div>
+        </div>
 
-      <h4>Project</h4>
-      <Input
-        type="textarea"
-        name="project"
-        placeholder="Your projects"
-        className="mb-2"
-        value={resume.project}
-        onChange={handleChange}
-      />
-
-      <h4>Skills</h4>
-      <Input
-        type="textarea"
-        name="skills"
-        placeholder="List your skills"
-        className="mb-2"
-        value={resume.skills}
-        onChange={handleChange}
-      />
-
-      <h4>Hobbies</h4>
-      <Input
-        type="textarea"
-        name="hobbies"
-        placeholder="Your hobbies"
-        className="mb-4"
-        value={resume.hobbies}
-        onChange={handleChange}
-      />
-
-      <div className="text-center">
-        <Button color="primary" className="me-2" onClick={save}>
-          Save
-        </Button>
-        <Button color="warning" className="me-2" onClick={clearPage}>
-          Clear
-        </Button>
-        <Button color="info" onClick={Download}>
-          Download Resume
-        </Button>
       </div>
-    </Container>
+
+      <div className="addressCityPhoneSec">
+        <span><input placeholder="Enter Address" name="address" id="address" /></span>
+        <span><input placeholder="Enter City" name="city" id="city" /></span>
+        <span><input placeholder="Enter Phone" name="phone" id="phone" /></span>
+      </div>
+
+      <div className="mainResumeBoxLeftSec">
+        {/* exp-education */}
+        <h3>Experiance</h3>
+        <div className="leftSecExpSec">
+          <div>
+            <input placeholder="Enter Date of joining" name="joiningDate" id="joiningDate" />
+            <input type="checkbox" name="checkCurrentstatus" id="checkCurrentStatus" />
+          </div>
+
+          <div className="dynamicLiSection">
+            <i className="fa fa-plus" onClick={addDynamicLiSecForExp}></i>
+          </div>
+        </div>
+      <h3>Education</h3>
+        <div className="leftSecEducationSec">
+          <div>
+            <input placeholder="Enter Date of joining" name="joiningDate2" id="joiningDate2" />
+            <input placeholder="Enter Date of Over" name="endingDate" id="endingDate" />
+          </div>
+
+          <div className="dynamicLiSection">
+            <i className="fa fa-plus" onClick={addDynamicLiSecForEducation}></i>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="mainResumeBoxRightSec">
+        {/* skill-personalproject-achivement-lang-intest */}
+      </div>
+
+    </div>
   );
 }
 
