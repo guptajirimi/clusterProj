@@ -36,21 +36,26 @@ const addDynamicLiSecForEducation=()=>
 {
   setEducationList([...educationList,""]);
 }
-const addSkills=()=>
-{
-  setEducationList([...educationList,""]);
-}
+
+const[personalprojectList,setPersonalprojectList]=useState([]);
+const[achivementList,setAchivementList]=useState([]);
 const addPersonalproject=()=>
 {
-  setEducationList([...educationList,""]);
+  setPersonalprojectList([...personalprojectList,""]);
 }
 const addAchivement=()=>
 {
-  setEducationList([...educationList,""]);
+  setAchivementList([...achivementList,""]);
+}
+const [skillList,setSkillList]=useState([]);
+const [languageList,setLanguageList]=useState([]);
+const addSkillBubble =()=>
+{
+  setSkillList([...skillList,""]);
 }
 const addLanguage=()=>
 {
-  setEducationList([...educationList,""]);
+  setLanguageList([...languageList,""]);
 }
 
   return (
@@ -92,7 +97,8 @@ const addLanguage=()=>
 
           <div className="dynamicLiSection">
             <ul>
-               {expList.map((item,index)=>(
+               {expList.map((item,index)=>
+               (
                   <li key={index}>
                       <input placeholder="Enter Experience"/>
                   </li>
@@ -125,24 +131,66 @@ const addLanguage=()=>
 
       <div className="mainResumeBoxRightSec">
         {/* skill-personalproject-achivement-lang*/}
-        <h3>Skill</h3>
-        <div className="RightSecSkill"> 
+       <h3>Skill</h3>
+<div className="RightSecSkill"> 
+  {skillList.map((item, index) => 
+  (
+    <span className="skillBubble" key={index}>
+      <input
+        value={item}
+        placeholder="Skill"
+        onChange={(e) => {
+          const updated = [...skillList];
+          updated[index] = e.target.value;
+          setSkillList(updated);
+        }}
+      />
+    </span>
+  ))}
 
-                <i className="fa fa-plus" onClick={addSkills}></i>
-        </div>
+  <i className="fa fa-plus" onClick={addSkillBubble}></i>
+</div>
+
         <div className="RightSecPersonalproject"> 
+          <h3>Personal project</h3>
                <ul>
-
+                  {personalprojectList.map((item,index)=>
+                  (
+                      <li key={index}>
+                        <input placeholder="Enter Personal Projects" />
+                      </li>
+                  ))}
                </ul>
                <i className="fa fa-plus" onClick={addPersonalproject}></i>
         </div>
-        <div className="RightSecAchivement"> 
+        <div className="RightSecAchivement">
+           <h3>Achivement</h3> 
                 <ul>
-                  
+                      {achivementList.map((item,index)=>
+                      (
+                      <li key={index}>
+                        <input placeholder="Enter Achivement" />
+                      </li>
+                  ))}
                </ul>
                <i className="fa fa-plus" onClick={addAchivement}></i>
         </div>
         <div className="RightSecLang"> 
+         <h3>Language</h3>
+{languageList.map((item, index) => (
+  <span key={index} className="skillBubble">
+    <input
+      placeholder="Language"
+      value={item}
+      onChange={(e) => {
+        const updated = [...languageList];
+        updated[index] = e.target.value;
+        setLanguageList(updated);
+      }}
+    />
+  </span>
+))}
+
                <i className="fa fa-plus" onClick={addLanguage}></i>
         </div>
       </div>

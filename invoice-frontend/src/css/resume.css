@@ -268,3 +268,21 @@ body {
     border-left: none;
   }
 }
+.skillBubble {
+  display: inline-block;
+  padding: 8px 15px;
+  margin: 5px;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.skillBubble input {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+.plusIcon {
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+}
