@@ -87,3 +87,32 @@
 {
   display: inline-block;
 }
+
+.addressCityPhoneSec {
+  display: flex;
+  gap: 20px;
+  padding: 15px 25px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.addressCityPhoneSec span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.addressCityPhoneSec i {
+  color: #2563eb;
+  font-size: 14px;
+}
+
+.addressCityPhoneSec input {
+  border: none;
+  border-bottom: 1px solid #d1d5db;
+  padding: 4px 6px;
+  outline: none;
+  font-size: 13px;
+  width: 100%;
+  background: transparent;
+}

@@ -23,14 +23,20 @@ const imageHandle=(e)=>
 
 }
 
-const[expList,setExpList]=useState([]);
+const[expList,setExpList]=useState([""]);
 
 
 const addDynamicLiSecForExp=()=>
 {
   setExpList([...expList,""]);
 }
+const deleteDynamicLiSecForExp=(index)=>
+{
+    const update=[...expList];
+    update.splice(index,1);
+    setExpList(update);
 
+}
 const[educationList,setEducationList]=useState([]);
 const addDynamicLiSecForEducation=()=>
 {
@@ -53,12 +59,71 @@ const addSkillBubble =()=>
 {
   setSkillList([...skillList,""]);
 }
+const removeSkillbubble=(index)=>{
+  const update=[...skillList];
+  update.splice(index,1);
+  setSkillList(update);
+}
 const addLanguage=()=>
 {
   setLanguageList([...languageList,""]);
 }
+const removeLanguageList=(index)=>
+{
+    const update=[...languageList];
+    update.splice(index,1);
+    setLanguageList(update);
+}
+
+const [newExpAddOnList,setNewExpAddOnList]=useState([]);
+const addNewExpAddOnList=()=>
+{
+  setNewExpAddOnList([...newExpAddOnList,""]);
+}
+const downlodePDF = () => {
+  const input = document.querySelector(".mainResumeBox");
+
+  // Hide unnecessary stuff before PDF
+  const plusIcons = input.querySelectorAll(".fa-plus");
+  const deleteIcons = input.querySelectorAll(".fa-times");
+  const browseLabel = input.querySelector("label[for='img']");
+
+  plusIcons.forEach(el => el.style.display = "none");
+  deleteIcons.forEach(el => el.style.display = "none");
+  if (browseLabel) browseLabel.style.display = "none";
+
+  // Remove borders from inputs and textareas for clean PDF
+  const allInputs = input.querySelectorAll("input, textarea");
+  allInputs.forEach(el => {
+    el.style.border = "none";
+    el.style.background = "transparent";
+    el.style.outline = "none";
+  });
+
+  // Generate PDF
+  html2canvas(input, { scale: 2 }).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "pt", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("resume.pdf");
+
+    // Restore original styles after PDF
+    plusIcons.forEach(el => el.style.display = "");
+    deleteIcons.forEach(el => el.style.display = "");
+    if (browseLabel) browseLabel.style.display = "";
+    allInputs.forEach(el => {
+      el.style.border = "";
+      el.style.background = "";
+      el.style.outline = "";
+    });
+  });
+};
 
   return (
+    <>
+    
     <div className="mainResumeBox">
 
       <div className="mainResumeBoxHeader">
@@ -81,78 +146,123 @@ const addLanguage=()=>
       </div>
 
       <div className="addressCityPhoneSec">
-        <span><input placeholder="Enter Address" name="address" id="address" /></span>
-        <span><input placeholder="Enter City" name="city" id="city" /></span>
-        <span><input placeholder="Enter Phone" name="phone" id="phone" /></span>
+        <span><i class="fa fa-map-marker" ></i><input placeholder="Enter Address" name="address" id="address" /></span>
+        <span><i class='fa fa-envelope'  ></i><input placeholder="Enter Email" name="Email" id="Email" /></span>
+        <span><i class="fa fa-phone"  ></i><input placeholder="Enter Phone" name="phone" id="phone" /></span>
       </div>
 
       <div className="mainResumeBoxLeftSec">
         {/* exp-education */}
-        <h3>Experiance</h3>
-        <div className="leftSecExpSec">
-          <div>
-            <input placeholder="Enter Date of joining" name="joiningDate" id="joiningDate" />
-            <input type="checkbox" name="checkCurrentstatus" id="checkCurrentStatus" />
+        <div className="sectionHeader">
+        <h3>Experience</h3>
+         <i className="fa fa-plus" onClick={addNewExpAddOnList}></i>
+         </div>
+         {newExpAddOnList.map((item,index)=>(  
+          <div className="leftSecExpSec" key={index}>
+          <div className="organisationAndJoinStatuusExp" key={index}>
+          <div className="orgaisationExp" key={index}>
+            <input placeholder="Enter Orgainisation"></input>
           </div>
-
-          <div className="dynamicLiSection">
+          <div className="joinStatsExp" key={index}>
+            <input placeholder="Enter Date of joining" type="date" name="joiningDate" id="joiningDate" />
+              <span className="dateDash">–</span>
+            <input type="date"/>
+            {/* <input type="checkbox" name="checkCurrentstatus" id="checkCurrentStatus" /> */}
+          </div>
+        </div>
+          <div className="dynamicLiSection" key={index}>
             <ul>
                {expList.map((item,index)=>
                (
                   <li key={index}>
-                      <input placeholder="Enter Experience"/>
+                      <input placeholder="Accomplishment/Responsibility/Task" 
+                       onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();  
+            addDynamicLiSecForExp();
+          }
+          if(e.key==="Delete"){
+               e.preventDefault();  
+               deleteDynamicLiSecForExp(index);
+          }
+        }}
+                    
+                     />
                   </li>
                ))}
             </ul>
-             <i className="fa fa-plus" onClick={addDynamicLiSecForExp}></i>
+             
           </div>
-        </div>
-      <h3>Education</h3>
-        <div className="leftSecEducationSec">
-          <div>
-            <input placeholder="Enter Date of joining" name="joiningDate2" id="joiningDate2" />
-            <input placeholder="Enter Date of Over" name="endingDate" id="endingDate" />
-          </div>
+        </div>))
+}
 
-          <div className="dynamicLiSection">
-            <ul>
-               {educationList.map((item,index)=>
-               (
-                <li key={index}>
-                  <input placeholder="Enter Education" />
-                </li>
-               ))}
-            </ul>
-            <i className="fa fa-plus" onClick={addDynamicLiSecForEducation}></i>
+
+
+
+      <div className="sectionHeader"><h3>Education</h3> <i className="fa fa-plus" onClick={addDynamicLiSecForEducation}></i></div>
+      {educationList.map((item,index)=>
+      (
+
+      
+        <div className="leftSecEducationSec" key={index}>
+          <div className="educationOrganisatioAndDates"  >
+          <div className="orgaisationExp">
+            <input placeholder="Enter Orgainisation"></input>
           </div>
+          <div className="JoiandEndates"> 
+            <input placeholder="Enter Date of joining" type="date" name="joiningDate2"   />
+              <span className="dateDash">–</span>
+            <input placeholder="Enter Date of Over" type="date" name="endingDate"  />
+          </div>
+</div>
+          <div className="dynamicLiSection">
+           <ul> 
+            <li>
+                  <input placeholder="Enter Course" />
+                </li>
+             </ul>
+           </div>
         </div>
+)
+      )
+}
+
+
+
+
 
       </div>
 
       <div className="mainResumeBoxRightSec">
         {/* skill-personalproject-achivement-lang*/}
-       <h3>Skill</h3>
+       <div className="sectionHeader"><h3>Skill</h3> <i className="fa fa-plus" onClick={addSkillBubble}></i></div>
 <div className="RightSecSkill"> 
   {skillList.map((item, index) => 
   (
     <span className="skillBubble" key={index}>
       <input
         value={item}
-        placeholder="Skill"
+        placeholder="Skill" maxLength={15}   style={
+          {
+            width:`${Math.max(item.length, 5)}ch`
+            
+          }
+        }
         onChange={(e) => {
           const updated = [...skillList];
           updated[index] = e.target.value;
           setSkillList(updated);
         }}
       />
+      <i class="fa fa-times" aria-hidden="true" onClick={()=>removeSkillbubble(index)}></i>
     </span>
   ))}
 
-  <i className="fa fa-plus" onClick={addSkillBubble}></i>
+  
 </div>
-
         <div className="RightSecPersonalproject"> 
-          <h3>Personal project</h3>
+          <div className="sectionHeader">
+          <h3>Project</h3><i className="fa fa-plus" onClick={addPersonalproject}></i></div>
                <ul>
                   {personalprojectList.map((item,index)=>
                   (
@@ -161,10 +271,11 @@ const addLanguage=()=>
                       </li>
                   ))}
                </ul>
-               <i className="fa fa-plus" onClick={addPersonalproject}></i>
+               
         </div>
+
         <div className="RightSecAchivement">
-           <h3>Achivement</h3> 
+           <div className="sectionHeader"><h3>Achivement</h3> <i className="fa fa-plus" onClick={addAchivement}></i></div>
                 <ul>
                       {achivementList.map((item,index)=>
                       (
@@ -173,14 +284,19 @@ const addLanguage=()=>
                       </li>
                   ))}
                </ul>
-               <i className="fa fa-plus" onClick={addAchivement}></i>
+               
         </div>
         <div className="RightSecLang"> 
-         <h3>Language</h3>
+         <div className="sectionHeader"><h3>Intrest</h3>           
+             <i className="fa fa-plus" onClick={addLanguage}></i>
+</div>
+<br/>
 {languageList.map((item, index) => (
   <span key={index} className="skillBubble">
     <input
-      placeholder="Language"
+      placeholder="Intrest" style={{
+        width:`${Math.max(item.length,7)}ch`
+      }}
       value={item}
       onChange={(e) => {
         const updated = [...languageList];
@@ -188,14 +304,21 @@ const addLanguage=()=>
         setLanguageList(updated);
       }}
     />
+     <i class="fa fa-times" aria-hidden="true" onClick={()=>removeLanguageList(index)}></i>
+
   </span>
 ))}
 
-               <i className="fa fa-plus" onClick={addLanguage}></i>
         </div>
       </div>
-
+   
     </div>
+    <div className="bttonSectionOutside">
+  <Button className="btn-primary" outline onClick={downlodePDF}><span>Download</span></Button>
+  <Button className="btn-success" outline><span>Save</span></Button>
+  <Button className="btn-danger" outline><span>Clear</span></Button>
+</div>
+    </>
   );
 }
 
