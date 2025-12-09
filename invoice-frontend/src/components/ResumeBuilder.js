@@ -157,7 +157,7 @@ const finalData=({
   languageList,
 })
  
-alert(finalData);
+
 
   $.ajax({
   url: "http://localhost:90/resumeBuilder/insert",
