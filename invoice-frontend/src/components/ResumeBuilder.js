@@ -4,6 +4,7 @@ import { Button, Container, Input } from "reactstrap";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "../css/resume.css";
+import $ from "jquery";
 
 function ResumeBuilder() {
 const imageHandle=(e)=>
@@ -120,6 +121,63 @@ const downlodePDF = () => {
     });
   });
 };
+const[resumeFormData,setResumeData]=useState({
+  nameHolder:"",
+  shortNote:"",
+  Email:"",
+  address:"",
+  phone:""
+  
+})
+
+
+const handleChange=(e)=>{
+    const name=e.target.name;
+    const value=e.target.value;
+    setResumeData(prev=>({
+        ...prev,
+        [name]:value
+    })
+
+    )
+
+}
+
+
+
+const saveToDatabase=()=>
+{
+const finalData=({
+  ...resumeFormData,
+  expList,
+  educationList,
+  skillList,
+  personalprojectList,
+  achivementList,
+  languageList,
+})
+ 
+alert(finalData);
+
+  $.ajax({
+  url: "http://localhost:90/resumeBuilder/insert",
+  type: "POST",
+  contentType: "application/json",
+  data: JSON.stringify(finalData),
+  success: function () {
+    console.log("SUCCESS");
+  },
+  error: function (err) {
+    console.log("ERROR", err);
+  }
+});
+
+
+}
+const clearAllFeilds=()=>
+{
+    <ResumeBuilder/>
+}
 
   return (
     <>
@@ -135,20 +193,20 @@ const downlodePDF = () => {
 
         <div className="mainResumeBoxHeaderIntro">
           <div>
-            <input placeholder="Enter Name" name="nameHolder" id="nameHolder" />
+            <input placeholder="Enter Name" name="nameHolder" id="nameHolder" onChange={handleChange} value={resumeFormData.nameHolder} />
           </div>
 
           <div>
-            <textarea placeholder="Short Note" name="shortNote" id="shortNote"></textarea>
+            <textarea placeholder="Short Note" name="shortNote" id="shortNote" onChange={handleChange} value={resumeFormData.shortNote}></textarea>
           </div>
         </div>
 
       </div>
 
       <div className="addressCityPhoneSec">
-        <span><i class="fa fa-map-marker" ></i><input placeholder="Enter Address" name="address" id="address" /></span>
-        <span><i class='fa fa-envelope'  ></i><input placeholder="Enter Email" name="Email" id="Email" /></span>
-        <span><i class="fa fa-phone"  ></i><input placeholder="Enter Phone" name="phone" id="phone" /></span>
+        <span><i class="fa fa-map-marker" ></i><input placeholder="Enter Address" name="address" id="address"  onChange={handleChange} value={resumeFormData.address}/></span>
+        <span><i class='fa fa-envelope'  ></i><input placeholder="Enter Email" name="Email" id="Email"  onChange={handleChange} value={resumeFormData.Email}/></span>
+        <span><i class="fa fa-phone"  ></i><input placeholder="Enter Phone" name="phone" id="phone"  onChange={handleChange} value={resumeFormData.phone}/></span>
       </div>
 
       <div className="mainResumeBoxLeftSec">
@@ -315,8 +373,8 @@ const downlodePDF = () => {
     </div>
     <div className="bttonSectionOutside">
   <Button className="btn-primary" outline onClick={downlodePDF}><span>Download</span></Button>
-  <Button className="btn-success" outline><span>Save</span></Button>
-  <Button className="btn-danger" outline><span>Clear</span></Button>
+  <Button className="btn-success" outline onClick={saveToDatabase}><span>Save</span></Button>
+  <Button className="btn-danger" outline onClick={clearAllFeilds}><span>Clear</span></Button>
 </div>
     </>
   );
