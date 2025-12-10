@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.springbootdemo.entity.EducationEntity;
 import com.example.springbootdemo.entity.ExperienceEntity;
 import com.example.springbootdemo.entity.ResumeBuilderEntity;
+import com.example.springbootdemo.entity.SkillEntity;
+import com.example.springbootdemo.repository.ResumeBuilderRepo;
 
 @RestController
 @RequestMapping("/resumeBuilder")
 public class ResumeBuilderCNT {
+
+    @Autowired
+    private ResumeBuilderRepo resumeRepo; // Inject repository
 
     @PostMapping("/insert")
     public String insert(@RequestBody Map<String, Object> json) {
@@ -42,20 +48,10 @@ public class ResumeBuilderCNT {
         List<Map<String, Object>> skillList =
                 (List<Map<String, Object>>) json.get("skillList");
 
-        List<Map<String, Object>> personalprojectList =
-                (List<Map<String, Object>>) json.get("personalprojectList");
-
-        List<Map<String, Object>> achivementList =
-                (List<Map<String, Object>>) json.get("achivementList");
-
-        List<Map<String, Object>> languageList =
-                (List<Map<String, Object>>) json.get("languageList");
-
         // ---- EXPERIENCE HANDLING ----
-        List<String> allAccomplishments = new ArrayList<>();
-
+        List<ExperienceEntity> experienceEntities = new ArrayList<>();
         for (Map<String, Object> c : expList) {
-                ExperienceEntity expEntity=new ExperienceEntity();
+            ExperienceEntity expEntity = new ExperienceEntity();
             String organisation = (String) c.get("organisation");
             String joiningDate  = (String) c.get("joiningDate");
             String endingDate   = (String) c.get("endingDate");
@@ -63,33 +59,48 @@ public class ResumeBuilderCNT {
             List<String> accomplishmentList =
                     (List<String>) c.get("accomplishment");
 
-            if (accomplishmentList != null) {
-                allAccomplishments.addAll(accomplishmentList);
-            }
             expEntity.setOrganisation(organisation);
             expEntity.setStartDate(joiningDate);
             expEntity.setEndDate(endingDate);
-
             expEntity.setAccomplishmentList(accomplishmentList);
-            
-        }
+            expEntity.setResume(fb); // set parent
 
-        String[] arr = allAccomplishments.toArray(new String[0]);
+            experienceEntities.add(expEntity);
+        }
+         
 
         // ---- EDUCATION HANDLING ----
+        List<EducationEntity> educationEntities = new ArrayList<>();
         for (Map<String, Object> c : educationList) {
-                EducationEntity eduEntity=new EducationEntity();
+            EducationEntity eduEntity = new EducationEntity();
             String organisation    = (String) c.get("organisation");
             String joiningDateEdu  = (String) c.get("joiningDateEdu");
             String endingDateEdu   = (String) c.get("endingDateEdu");
             String course          = (String) c.get("course");
 
-             eduEntity.setOrganisation(organisation);
-             eduEntity.setJoiningDate(joiningDateEdu);
-             eduEntity.setCourse(course);
-             eduEntity.setEndingDate(endingDateEdu);
+            eduEntity.setOrganisation(organisation);
+            eduEntity.setJoiningDate(joiningDateEdu);
+            eduEntity.setCourse(course);
+            eduEntity.setEndingDate(endingDateEdu);
+            eduEntity.setResume(fb); // set parent
 
+            educationEntities.add(eduEntity);
         }
+         
+
+        // ---- SKILLS HANDLING ----
+        List<SkillEntity> skillEntities = new ArrayList<>();
+        for (Map<String, Object> c : skillList) {
+            SkillEntity skillEntity = new SkillEntity();
+            String skillName = (String) c.get("skillName");
+            skillEntity.setSkillName(skillName);
+            skillEntity.setResume(fb); // set parent
+            skillEntities.add(skillEntity);
+        }
+        
+
+         
+        resumeRepo.save(fb);  
 
         return "OK";
     }
