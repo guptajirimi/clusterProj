@@ -24,8 +24,25 @@ const imageHandle=(e)=>
 
 }
 
-const[expList,setExpList]=useState([""]);
+const[expList,setExpList]=useState([{
+  organisation:"",
+  joiningDate:"",
+  endingDate:"",
+   accomplishment:[""]
+}]);
 
+const addExperience=()=>
+{
+  setExpList([
+...expList,
+{
+  organisation:"",
+  joiningDate:"",
+  endingDate:"",
+   accomplishment:[""]
+}
+  ])
+}
 
 const addDynamicLiSecForExp=()=>
 {
@@ -38,10 +55,24 @@ const deleteDynamicLiSecForExp=(index)=>
     setExpList(update);
 
 }
-const[educationList,setEducationList]=useState([]);
+const[educationList,setEducationList]=useState([
+  {
+    organisation:"",
+    joiningDateEdu:"",
+    endingDateEdu:"",
+    course:""
+  }
+]);
 const addDynamicLiSecForEducation=()=>
 {
-  setEducationList([...educationList,""]);
+  setEducationList([
+    ...educationList,
+    {
+      organisation:"",
+    joiningDateEdu:"",
+    endingDateEdu:"",
+    course:""
+    }]);
 }
 
 const[personalprojectList,setPersonalprojectList]=useState([]);
@@ -76,11 +107,7 @@ const removeLanguageList=(index)=>
     setLanguageList(update);
 }
 
-const [newExpAddOnList,setNewExpAddOnList]=useState([]);
-const addNewExpAddOnList=()=>
-{
-  setNewExpAddOnList([...newExpAddOnList,""]);
-}
+ 
 const downlodePDF = () => {
   const input = document.querySelector(".mainResumeBox");
 
@@ -213,35 +240,63 @@ const clearAllFeilds=()=>
         {/* exp-education */}
         <div className="sectionHeader">
         <h3>Experience</h3>
-         <i className="fa fa-plus" onClick={addNewExpAddOnList}></i>
+         <i className="fa fa-plus" onClick={addExperience}></i>
          </div>
-         {newExpAddOnList.map((item,index)=>(  
-          <div className="leftSecExpSec" key={index}>
-          <div className="organisationAndJoinStatuusExp" key={index}>
-          <div className="orgaisationExp" key={index}>
-            <input placeholder="Enter Orgainisation"></input>
+         {expList.map((exp,expIndex)=>(  
+          <div className="leftSecExpSec" key={expIndex}>
+          <div className="organisationAndJoinStatuusExp"  >
+          <div className="orgaisationExp"   >
+            <input placeholder="Enter Orgainisation" value={exp.organisation}  name="organisation" id="organisation"
+                  onChange={(e)=>
+                  {
+                    const update=[...expList];
+                    update[expIndex].organisation=e.target.value;
+                    setExpList(update);
+                  }}></input>
           </div>
-          <div className="joinStatsExp" key={index}>
-            <input placeholder="Enter Date of joining" type="date" name="joiningDate" id="joiningDate" />
+          <div className="joinStatsExp" key={expIndex}>
+            <input placeholder="Enter Date of joining" type="date" name="joiningDate" id="joiningDate"  value={exp.joiningDate} 
+                  onChange={(e)=>
+                  {
+                    const update=[...expList];
+                    update[expIndex].joiningDate=e.target.value;
+                    setExpList(update);
+                  }}/>
               <span className="dateDash">–</span>
-            <input type="date"/>
+            <input type="date" value={exp.endingDate}  name="endingDate" id="endingDate"
+                  onChange={(e)=>
+                  {
+                    const update=[...expList];
+                    update[expIndex].endingDate=e.target.value;
+                    setExpList(update);
+                  }}/>
             {/* <input type="checkbox" name="checkCurrentstatus" id="checkCurrentStatus" /> */}
           </div>
         </div>
-          <div className="dynamicLiSection" key={index}>
+          <div className="dynamicLiSection"  >
             <ul>
-               {expList.map((item,index)=>
+               {exp.accomplishment.map((item,index)=>
                (
                   <li key={index}>
-                      <input placeholder="Accomplishment/Responsibility/Task" 
+                      <input placeholder="Accomplishment/Responsibility/Task"  value={item.accomplishment}  name="accomplishment" id="accomplishment"
+                  onChange={(e)=>
+                  {
+                    const update=[...expList];
+                    update[expIndex].accomplishment[index]=e.target.value;
+                    setExpList(update);
+                  }}
                        onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();  
-            addDynamicLiSecForExp();
+           const updated = [...expList];
+          updated[expIndex].accomplishment.push("");
+          setExpList(updated);
           }
           if(e.key==="Delete"){
                e.preventDefault();  
-               deleteDynamicLiSecForExp(index);
+               const updated = [...expList];
+          updated[expIndex].accomplishment.splice(index, 1);
+          setExpList(updated);
           }
         }}
                     
@@ -265,18 +320,43 @@ const clearAllFeilds=()=>
         <div className="leftSecEducationSec" key={index}>
           <div className="educationOrganisatioAndDates"  >
           <div className="orgaisationExp">
-            <input placeholder="Enter Orgainisation"></input>
+            <input placeholder="Enter Orgainisation" value={item.organisation}  name="organisation"
+                  onChange={(e)=>
+                  {
+                    const update=[...educationList];
+                    update[index].organisation=e.target.value;
+                    setEducationList(update);
+                  }}></input>
           </div>
           <div className="JoiandEndates"> 
-            <input placeholder="Enter Date of joining" type="date" name="joiningDate2"   />
+            <input placeholder="Enter Date of joining" type="date" name="joiningDateEdu"   value={item.joiningDateEdu} 
+                  onChange={(e)=>
+                  {
+                    const update=[...educationList];
+                    update[index].joiningDateEdu=e.target.value;
+                    setEducationList(update);
+                  } }/>
               <span className="dateDash">–</span>
-            <input placeholder="Enter Date of Over" type="date" name="endingDate"  />
+            <input placeholder="Enter Date of Over" type="date" name="endingDateEdu"  value={item.endingDateEdu} 
+                  onChange={(e)=>
+                  {
+                    const update=[...educationList];
+                    update[index].endingDateEdu=e.target.value;
+                    setEducationList(update);
+                  }}/>
           </div>
 </div>
           <div className="dynamicLiSection">
            <ul> 
             <li>
-                  <input placeholder="Enter Course" />
+                  <input placeholder="Enter Course" value={item.course}  name="course"
+                  onChange={(e)=>
+                  {
+                    const update=[...educationList];
+                    update[index].course=e.target.value;
+                    setEducationList(update);
+                  }
+                  }/>
                 </li>
              </ul>
            </div>
@@ -325,7 +405,13 @@ const clearAllFeilds=()=>
                   {personalprojectList.map((item,index)=>
                   (
                       <li key={index}>
-                        <input placeholder="Enter Personal Projects" />
+                        <input placeholder="Enter Personal Projects" value={item}
+                          onChange={(e)=>{
+                            const update=[...personalprojectList];
+                            update[index]=e.target.value;
+                            setPersonalprojectList(update);
+                          }}
+                        />
                       </li>
                   ))}
                </ul>
@@ -338,7 +424,14 @@ const clearAllFeilds=()=>
                       {achivementList.map((item,index)=>
                       (
                       <li key={index}>
-                        <input placeholder="Enter Achivement" />
+                        <input placeholder="Enter Achivement" value={item} 
+                        onChange={(e)=>
+                        {
+                          const update=[...achivementList];
+                          update[index]=e.target.value;
+                          setAchivementList(update);
+                        }
+                        }/>
                       </li>
                   ))}
                </ul>

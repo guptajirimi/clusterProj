@@ -1,5 +1,8 @@
 package com.example.springbootdemo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +22,8 @@ public class ExperienceEntity {
     private String startDate;
     private String endDate;
     private String responsibility;
-
+    List<String> accomplishmentList=new ArrayList<>();
+    
     @ManyToOne
     @JoinColumn(name = "resume_id")
     private ResumeBuilderEntity resume;
@@ -71,5 +75,15 @@ public class ExperienceEntity {
     public void setResume(ResumeBuilderEntity resume) {
         this.resume = resume;
     }
+
+    public List<String> getAccomplishmentList() {
+        return accomplishmentList;
+    }
+
+    public void setAccomplishmentList(List<String> accomplishmentList) {
+        this.accomplishmentList = accomplishmentList;
+    }
+
+     
 
 }
