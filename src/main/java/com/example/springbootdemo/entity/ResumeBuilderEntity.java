@@ -98,4 +98,52 @@ public class ResumeBuilderEntity {
     this.phoneno = phoneno;
   }
 
+  public List<ExperienceEntity> getExperienceList() {
+    return experienceList;
+  }
+
+  public void setExperienceList(List<ExperienceEntity> experienceList) {
+    this.experienceList = experienceList;
+  }
+
+  public List<EducationEntity> getEducationList() {
+    return educationList;
+  }
+
+  public void setEducationList(List<EducationEntity> educationList) {
+    this.educationList = educationList;
+  }
+
+  public List<SkillEntity> getSkillList() {
+    return skillList;
+  }
+
+  public void setSkillList(List<SkillEntity> skillList) {
+    this.skillList = skillList;
+  }
+
+  public List<PersonalProjectEntity> getPersonalProjectList() {
+    return personalProjectList;
+  }
+
+  public void setPersonalProjectList(List<PersonalProjectEntity> personalProjectList) {
+    this.personalProjectList = personalProjectList;
+  }
+
+  public List<AchivementEntity> getAchivementList() {
+    return achivementList;
+  }
+
+  public void setAchivementList(List<AchivementEntity> achivementList) {
+    this.achivementList = achivementList;
+  }
+
+  public List<IntrestEntity> getIntrestList() {
+    return intrestList;
+  }
+
+  public void setIntrestList(List<IntrestEntity> intrestList) {
+    this.intrestList = intrestList;
+  }
+
 }

@@ -22,5 +22,30 @@ public class IntrestEntity {
     @JoinColumn(name = "resume_id")
     private ResumeBuilderEntity resume;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getIntrestName() {
+        return intrestName;
+    }
+
+    public void setIntrestName(String intrestName) {
+        this.intrestName = intrestName;
+    }
+
+    public ResumeBuilderEntity getResume() {
+        return resume;
+    }
+
+    public void setResume(ResumeBuilderEntity resume) {
+        this.resume = resume;
+    }
+
     /* getters & setters */
+    
 }

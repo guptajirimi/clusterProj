@@ -22,5 +22,29 @@ public class AchivementEntity {
     @JoinColumn(name = "resume_id")
     private ResumeBuilderEntity resume;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAchivementName() {
+        return achivementName;
+    }
+
+    public void setAchivementName(String achivementName) {
+        this.achivementName = achivementName;
+    }
+
+    public ResumeBuilderEntity getResume() {
+        return resume;
+    }
+
+    public void setResume(ResumeBuilderEntity resume) {
+        this.resume = resume;
+    }
+
     /* getters & setters */
 }
