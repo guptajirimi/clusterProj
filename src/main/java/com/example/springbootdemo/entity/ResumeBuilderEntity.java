@@ -1,5 +1,6 @@
 package com.example.springbootdemo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -32,23 +33,24 @@ public class ResumeBuilderEntity {
   // remove from froentend it wil
   // automatically removed from the
   // backend
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<ExperienceEntity> experienceList;
+ @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<ExperienceEntity> experienceList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<EducationEntity> educationList;
+@OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<EducationEntity> educationList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<SkillEntity> skillList;
+@OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<SkillEntity> skillList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<PersonalProjectEntity> personalProjectList;
+@OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<PersonalProjectEntity> personalProjectList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<AchivementEntity> achivementList;
+@OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<AchivementEntity> achivementList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<IntrestEntity> intrestList;
+@OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<IntrestEntity> intrestList = new ArrayList<>();
+
 
   public long getResumeid() {
     return resumeid;

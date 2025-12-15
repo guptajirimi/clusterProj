@@ -29,18 +29,12 @@ public class ResumeBuilderCNT {
         // ---- BASIC FIELDS ----
         ResumeBuilderEntity fb = new ResumeBuilderEntity();
 
-        String nameHolder = (String) json.get("nameHolder");
-        String shortNote  = (String) json.get("shortNote");
-        String email      = (String) json.get("Email");
-        String address    = (String) json.get("address");
-        String phone      = (String) json.get("phone");
+        fb.setNameHolder((String) json.get("nameHolder"));
+        fb.setShortNote((String) json.get("shortNote"));
+        fb.setEmail((String) json.get("Email"));
+        fb.setAddress((String) json.get("address"));
+        fb.setPhoneno((String) json.get("phone"));
 
-        fb.setNameHolder(nameHolder);
-        fb.setShortNote(shortNote);
-        fb.setEmail(email);
-        fb.setAddress(address);
-        fb.setPhoneno(phone);
- 
         // ---- LISTS FROM JSON ----
         List<Map<String, Object>> expList =
                 (List<Map<String, Object>>) json.get("expList");
@@ -48,84 +42,79 @@ public class ResumeBuilderCNT {
         List<Map<String, Object>> educationList =
                 (List<Map<String, Object>>) json.get("educationList");
 
-        List<Map<String, Object>> skillList =
-                (List<Map<String, Object>>) json.get("skillList");
+        List<String> skillList =
+                (List<String>) json.get("skillList");
 
-                 List<Map<String, Object>> personalprojectList =
-                (List<Map<String, Object>>) json.get("personalprojectList");
-                 List<Map<String, Object>> achivementList =
-                (List<Map<String, Object>>) json.get("achivementList");
-                 List<Map<String, Object>> languageList =
-                (List<Map<String, Object>>) json.get("languageList");
+        List<String> personalprojectList =
+                (List<String>) json.get("personalprojectList");
+
+        List<String> achivementList =
+                (List<String>) json.get("achivementList");
+
+        List<String> languageList =
+                (List<String>) json.get("languageList");
+
         // ---- EXPERIENCE HANDLING ----
-        List<ExperienceEntity> experienceEntities = new ArrayList<>();
         for (Map<String, Object> c : expList) {
             ExperienceEntity expEntity = new ExperienceEntity();
-            String organisation = (String) c.get("organisation");
-            String joiningDate  = (String) c.get("joiningDate");
-            String endingDate   = (String) c.get("endingDate");
+            expEntity.setOrganisation((String) c.get("organisation"));
+            expEntity.setStartDate((String) c.get("joiningDate"));
+            expEntity.setEndDate((String) c.get("endingDate"));
 
             List<String> accomplishmentList =
                     (List<String>) c.get("accomplishment");
-
-            expEntity.setOrganisation(organisation);
-            expEntity.setStartDate(joiningDate);
-            expEntity.setEndDate(endingDate);
             expEntity.setAccomplishmentList(accomplishmentList);
             expEntity.setResume(fb); // set parent
 
-             fb.getExperienceList().add(expEntity);
+            fb.getExperienceList().add(expEntity);
         }
-         
 
         // ---- EDUCATION HANDLING ----
-        List<EducationEntity> educationEntities = new ArrayList<>();
         for (Map<String, Object> c : educationList) {
             EducationEntity eduEntity = new EducationEntity();
-            String organisation    = (String) c.get("organisation");
-            String joiningDateEdu  = (String) c.get("joiningDateEdu");
-            String endingDateEdu   = (String) c.get("endingDateEdu");
-            String course          = (String) c.get("course");
-
-            eduEntity.setOrganisation(organisation);
-            eduEntity.setJoiningDate(joiningDateEdu);
-            eduEntity.setCourse(course);
-            eduEntity.setEndingDate(endingDateEdu);
+            eduEntity.setOrganisation((String) c.get("organisation"));
+            eduEntity.setJoiningDate((String) c.get("joiningDateEdu"));
+            eduEntity.setEndingDate((String) c.get("endingDateEdu"));
+            eduEntity.setCourse((String) c.get("course"));
             eduEntity.setResume(fb); // set parent
+
             fb.getEducationList().add(eduEntity);
-            educationEntities.add(eduEntity);
         }
-         
 
         // ---- SKILLS HANDLING ----
-        List<SkillEntity> skillEntities = new ArrayList<>();
-        for (Map<String, Object> c : skillList) {
+        for (String s : skillList) {
             SkillEntity skillEntity = new SkillEntity();
-            String skillName = (String) c.get("skillName");
-            skillEntity.setSkillName(skillName);
-            skillEntity.setResume(fb); // set parent
+            skillEntity.setSkillName(s);
+            skillEntity.setResume(fb);
             fb.getSkillList().add(skillEntity);
+        }
 
+        // ---- PERSONAL PROJECTS HANDLING ----
+        for (String p : personalprojectList) {
+            PersonalProjectEntity pe = new PersonalProjectEntity();
+            pe.setProjectName(p);
+            pe.setResume(fb);
+            fb.getPersonalProjectList().add(pe);
         }
-        // ---personal proj
-        List<PersonalProjectEntity> personalProjectEntities=new ArrayList<>();
-        for(Map<String,Object> c:personalprojectList){
-            PersonalProjectEntity personalProjectEntity=new PersonalProjectEntity();
-            personalProjectEntity.setProjectName((String) c.get("personalprojectList"));
-            personalProjectEntity.setResume(fb);
-             fb.getPersonalProjectList().add(personalProjectEntity);
-        }
-        List<AchivementEntity> achivementEntitiy=new ArrayList<>();
-        for(Map<String,Object> c:achivementEntitiy){
-            
-        }
-        List<IntrestEntity> intrestEntitiy=new ArrayList<>();
-         
 
-            fb.setExperienceList(experienceEntities);
-            fb.setEducationList(educationEntities);
-            fb.setSkillList(skillEntities);
-            resumeRepo.save(fb);  
+        // ---- ACHIEVEMENTS HANDLING ----
+        for (String a : achivementList) {
+            AchivementEntity ach = new AchivementEntity();
+            ach.setAchivementName(a);
+            ach.setResume(fb);
+            fb.getAchivementList().add(ach);
+        }
+
+        // ---- INTERESTS / LANGUAGES HANDLING ----
+        for (String l : languageList) {
+            IntrestEntity in = new IntrestEntity();
+            in.setIntrestName(l);
+            in.setResume(fb);
+            fb.getIntrestList().add(in);
+        }
+
+        // ---- SAVE ALL TO DATABASE ----
+        resumeRepo.save(fb);
 
         return "OK";
     }
