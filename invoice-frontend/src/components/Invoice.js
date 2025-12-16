@@ -1,9 +1,10 @@
 import React from "react";
 import "../css/invoice.css";
+import { useState } from "react";
 
 function Invoice() {
 
-	const [itemList, setItemList] = useState({
+	const [itemList, setItemList] = useState([{
 		snNo: "",
 		Qty: "",
 		Rack: "",
@@ -17,13 +18,29 @@ function Invoice() {
 		SGST: "",
 		CGST: "",
 		Amount: ""
-	});
+	}]);
 
 	const addDynamicList = () => {
-		setItemList([...itemList, ""]);
+		setItemList([...itemList, 
+            {
+                snNo: "",
+		Qty: "",
+		Rack: "",
+		Product: "",
+		Batch: "",
+		Exp: "",
+		HSN: "",
+		MRP: "",
+		Rate: "",
+		Dis: "",
+		SGST: "",
+		CGST: "",
+		Amount: ""
+            }
+        ]);
 	}
 	
-	const[invoiceFormData,setinvoiceFormData]=useState({
+	const[invoiceFormData,setinvoiceFormData]=useState([{
 		IssuerSign:"",
 		receiverSign:"",
 		duedateTillPayment:"",
@@ -37,14 +54,14 @@ function Invoice() {
 		invoiceToName:"",
 		invoiceGeneratorAdress:"",
 		invoiceGeneratorPhno:""
-	});
-	const handleChange=(e)=>{
+	}]);
+	const handelChange=(e)=>{
 		var name=e.target.name;
-		var value=e.terget.value;
-		setinvoiceFormData[prev=>({
+		var value=e.target.value;
+		setinvoiceFormData(prev=>({
 			...prev,
 			[name]:value
-		})]
+		}))
 	}
 	return (
 		<>
@@ -93,7 +110,7 @@ function Invoice() {
 							<th>Amount</th>
 						</tr>
 						<tbody>
-							{itemList.map((item, index) => (
+							{itemList.map((item, index) => ( 
 								<tr key={index}>
 									<td><input name="item" id="Sn No." value={item.snNo} placeholder="Sn No" /></td>
 									<td><input name="Qty" id="Qty" value={item.Qty} placeholder="Qty" /></td>
@@ -134,4 +151,4 @@ function Invoice() {
 }
 
 
-
+export default Invoice;
