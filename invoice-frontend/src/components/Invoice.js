@@ -1,3 +1,4 @@
+
 function Invoice() {
 
 	const [itemList, setItemList] = useState({
@@ -19,33 +20,56 @@ function Invoice() {
 	const addDynamicList = () => {
 		setItemList([...itemList, ""]);
 	}
-
+	
+	const[invoiceFormData,setinvoiceFormData]=useState({
+		IssuerSign:"",
+		receiverSign:"",
+		duedateTillPayment:"",
+		dateEntry:"",
+		invoiceNo:"",
+		salesMan:"",
+		dlno:"",
+		emailOfIssuer:"",
+		gstinNo:"",
+		invoiceGeneratorName:"",
+		invoiceToName:"",
+		invoiceGeneratorAdress:"",
+		invoiceGeneratorPhno:""
+	});
+	const handleChange=(e)=>{
+		var name=e.target.name;
+		var value=e.terget.value;
+		setinvoiceFormData[prev=>({
+			...prev,
+			[name]:value
+		})]
+	}
 	return (
 		<>
 			<div className="invoiceMainContainer">
 				<div className="headerSection">
-					<input name="invoiceGeneratorName" id="invoiceGeneratorName" placeholder="Generator Name" />
-					<input name="invoiceToName" id="invoiceToName" placeholder="Invoice To" />
-					<input name="invoiceGeneratorAdress" id="invoiceGeneratorAdress" placeholder="Address" />
-					<input name="invoiceGeneratorPhno" id="invoiceGeneratorPhno" maxLength={10} placeholder="Phone No" />
+					<input name="invoiceGeneratorName" id="invoiceGeneratorName" placeholder="Generator Name" onChange={handelChange} value={invoiceFormData.invoiceGeneratorName} />
+					<input name="invoiceToName" id="invoiceToName" placeholder="Invoice To" onChange={handelChange} value={invoiceFormData.invoiceToName}/>
+					<input name="invoiceGeneratorAdress" id="invoiceGeneratorAdress" placeholder="Address" onChange={handelChange} value={invoiceFormData.invoiceGeneratorAdress}/>
+					<input name="invoiceGeneratorPhno" id="invoiceGeneratorPhno" maxLength={10} placeholder="Phone No" onChange={handelChange} value={invoiceFormData.invoiceGeneratorPhno}/>
 				</div>
 				<div className="GST-section">
 					<div className="gstDetailsSecOne">
-						<input name="dlno" id="dlno" placeholder="DL No" />
-						<input name="emailOfIssuer" id="emailOfIssuer" placeholder="Email" />
-						<input name="gstinNo" id="gstinNo" placeholder="GSTIN" />
+						<input name="dlno" id="dlno" placeholder="DL No" onChange={handelChange} value={invoiceFormData.dlno}/>
+						<input name="emailOfIssuer" id="emailOfIssuer" placeholder="Email" onChange={handelChange} value={invoiceFormData.emailOfIssuer}/>
+						<input name="gstinNo" id="gstinNo" placeholder="GSTIN" onChange={handelChange} value={invoiceFormData.gstinNo}/>
 					</div>
 					<div className="gstDetailsSecTwo">
 						<h3>GST Invoice</h3>
 					</div>
 					<div className="gstDetailsSecThree">
 						<div className="gstInsideFlexOne">
-							<input name="invoiceNo" id="invoiceNo" placeholder="Invoice No" />
-							<input name="salesMan" id="salesMan" placeholder="Salesman" />
+							<input name="invoiceNo" id="invoiceNo" placeholder="Invoice No" onChange={handelChange} value={invoiceFormData.invoiceNo}/>
+							<input name="salesMan" id="salesMan" placeholder="Salesman" onChange={handelChange} value={invoiceFormData.salesMan}/>
 						</div>
 						<div className="gstInsideFlexTwo">
-							<input type="date" name="dateEntry" id="dateEntry" placeholder="Invoice Date" />
-							<input type="date" name="duedateTillPayment" id="duedateTillPayment" placeholder="Due Date" />
+							<input type="date" name="dateEntry" id="dateEntry" placeholder="Invoice Date" onChange={handelChange} value={invoiceFormData.dateEntry}/>
+							<input type="date" name="duedateTillPayment" id="duedateTillPayment" placeholder="Due Date" onChange={handelChange} value={invoiceFormData.duedateTillPayment}/>
 						</div>
 					</div>
 				</div>
@@ -90,8 +114,22 @@ function Invoice() {
 					</table>
 				</div>
 				<div className="footerSection"></div>
+					<div className="totalAmountSec">
+								<p> Sub Total :</p>
+								<p> With SGST :</p>
+								<p> With CGST :</p>
+								<p> Total Amount:</p>
+								
+					</div>
+					<div className="signatureSection">
+									 <input tpye="textArea" name="receiverSign" onChange={handelChange} value={invoiceFormData.receiverSign}/>
+									 <input tpye="textArea" name="IssuerSign" onChange={handelChange} value={invoiceFormData.IssuerSign}/>		
+					</div>
 				<div></div>
 			</div>
 		</>
 	);
 }
+
+
+
