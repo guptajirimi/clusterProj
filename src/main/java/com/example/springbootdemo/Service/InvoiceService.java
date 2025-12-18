@@ -18,6 +18,10 @@ IntrestRepo  intrestRepo;
      return   intrestRepo.getTax();
     }
 
+    public Long getRandomInvoiceNo() {
+          return   intrestRepo.getRandomInvoiceNo();
+    }
+
     
     
 }

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/invoice.css";
 import { useState } from "react";
 import $ from "jquery";
 
 function Invoice() {
-
+const today = new Date().toISOString().split("T")[0];
+ const [sgst, setSgst] = useState(0);
+    const [cgst, setCgst] = useState(0);
 	const [itemList, setItemList] = useState([
 		{
 			snNo: "",
@@ -44,23 +46,23 @@ function Invoice() {
 		]);
 	};
 
-	const [invoiceFormData, setinvoiceFormData] = useState([
-		{
-			IssuerSign: "",
-			receiverSign: "",
-			duedateTillPayment: "",
-			dateEntry: "",
-			invoiceNo: "",
-			salesMan: "",
-			dlno: "",
-			emailOfIssuer: "",
-			gstinNo: "",
-			invoiceGeneratorName: "",
-			invoiceToName: "",
-			invoiceGeneratorAdress: "",
-			invoiceGeneratorPhno: ""
-		}
-	]);
+	 
+	const [invoiceFormData, setinvoiceFormData] = useState({
+    IssuerSign: "",
+    receiverSign: "",
+    duedateTillPayment: "",
+    dateEntry: today,
+    invoiceNo: "",
+    salesMan: "",
+    dlno: "",
+    emailOfIssuer: "",
+    gstinNo: "",
+    invoiceGeneratorName: "",
+    invoiceToName: "",
+    invoiceGeneratorAdress: "",
+    invoiceGeneratorPhno: ""
+});
+
 
 	const handelChange = (e) => {
 		var name = e.target.name;
@@ -78,25 +80,53 @@ function Invoice() {
 		}, 0);
 		 
 
-  var sgst;
-var cgst;
-$.ajax({
-	url:'http://localhost:90/invoice/getGST',
-	contentType:"application/json",
-	type:"GET",
-	data:JSON.stringify(),
-	success:function(responce){
-		sgst=responce;
-		cgst=responce;
-	},
-	error:function(responce){
-			 
-	}
-	
-})  
+ 
+
+useEffect(()=> {
+    // Call once when page loads
+    $.ajax({
+        url: 'http://localhost:90/invoice/getGST',
+        contentType: "application/json",
+        type: "GET",
+        success: function(response) {
+			 response.forEach(function(item){
+				if(item.tax_name==="SGST")
+				{
+					setSgst(item.tax_value);
+				}
+				else if(item.tax_name==="CGST")
+				{
+					setCgst(item.tax_value);
+				}
+			 }
+
+			 )
+        },
+        error: function(err) {
+            console.error("Error fetching GST:", err);
+        }
+    });
+},[]);
+useEffect(() => {
+    $.ajax({
+        url:"http://localhost:90/invoice/getRandomInvoiceNo",
+        contentType:"application/json",
+        type:"GET",
+        success:function(responce){
+            setinvoiceFormData(prev => ({
+                ...prev,
+                invoiceNo: responce
+            }));
+        },
+        error: function(err) {
+            console.error("Error fetching Invoice No:", err);
+        }
+    });
+}, []);
 
 	return (
 		<>
+		 
 			<div className="invoiceMainContainer">
 
 				{/* Header */}
@@ -171,7 +201,7 @@ $.ajax({
 								id="invoiceNo"
 								placeholder="Invoice No"
 								onChange={handelChange}
-								value={invoiceFormData.invoiceNo}
+								value={invoiceFormData.invoiceNo} readOnly
 							/>
 							<input
 								name="salesMan"
@@ -184,7 +214,7 @@ $.ajax({
 
 						<div className="gstInsideFlexTwo">
 							<input
-								type="date"
+								 
 								name="dateEntry"
 								id="dateEntry"
 								onChange={handelChange}
@@ -296,14 +326,14 @@ $.ajax({
 											setItemList(update);
 										}}
 									/></td>
-									<td><input value={item.SGST} placeholder="SGST %"
+									<td><input value={item.SGST} placeholder="SGST %" step={1} min={0} type="number"
 										onChange={(e) => {
 											const update = [...itemList];
 											update[index].SGST = e.target.value;
 											setItemList(update);
 										}}
 									/></td>
-									<td><input value={item.CGST} placeholder="CGST %"
+									<td><input value={item.CGST} placeholder="CGST %" step={1} min={0} type="number"
 										onChange={(e) => {
 											const update = [...itemList];
 											update[index].CGST = e.target.value;
@@ -318,10 +348,10 @@ $.ajax({
 												setItemList(update);
 											}}
 										/>
-										<i className="fa fa-plus" onClick={addDynamicList}></i>
+										
 									</td>
 								</tr>
-							))}
+							))}<i className="fa fa-plus" onClick={addDynamicList}></i>
 						</tbody>
 					</table>
 				</div>
@@ -329,8 +359,8 @@ $.ajax({
 				{/* Totals */}
 				<div className="totalAmountSec">
 					<p>Sub Total :{subtotal}</p>
-					<p>With SGST :</p>
-					<p>With CGST :</p>
+					<p>With SGST{sgst} :</p>
+					<p>With CGST{cgst} :</p>
 					<p>Total Amount :</p>
 				</div>
 

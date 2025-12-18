@@ -12,5 +12,8 @@ import com.example.springbootdemo.entity.InvoiceEntity;
 public interface IntrestRepo extends JpaRepository< InvoiceEntity,Integer>{
     @Query("Select i from InvoiceEntity i")
     List<InvoiceEntity> getTax();
+
+    @Query(value = "Select get_random_invoice_no()",nativeQuery=true)
+    Long getRandomInvoiceNo();
     
 }
