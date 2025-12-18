@@ -1,13 +1,20 @@
-import react from "react";
+import React from "react";
 
-function SuggestionBox(){
-    const [suggestions,setsuggestionList]=useState(["para","tab","inj"]);
+function SuggestionBox() {
 
-    return(
-        <>
-            <div id="topserchbar">
-                    <input id="suggestion" name="suggestion" placeholder="" value={suggestions}/>
-            </div>
-        </>
-    )
+  const suggestions = ["para", "tab", "inj"];
+
+  return (
+    <>
+      <div id="topserchbar">
+        {suggestions.map((item, index) => (
+          <div key={index}>
+            {item}
+          </div>
+        ))}
+      </div>
+    </>
+  );
 }
+
+export default SuggestionBox;
