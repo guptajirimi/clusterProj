@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "../css/invoice.css";
 import { useState } from "react";
 import $ from "jquery";
+import SuggestionBox from "./SuggestionBox";
 
 function Invoice() {
 const today = new Date().toISOString().split("T")[0];
@@ -126,7 +127,7 @@ useEffect(() => {
 
 	return (
 		<>
-		 
+		 <SuggestionBox/>  
 			<div className="invoiceMainContainer">
 
 				{/* Header */}

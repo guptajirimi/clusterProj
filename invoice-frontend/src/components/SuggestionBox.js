@@ -1,18 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import $ from "jquery";
 
 function SuggestionBox() {
 
-  const suggestions = ["para", "tab", "inj"];
+  const [suggestions, setSuggestion] = useState([]);
+  const [userInputItem, setUserInputItem] = useState("");
+
+  useEffect(() => {
+    $.ajax({
+      url: "http://localhost:90/invoice/getItemList",
+      type: "GET",
+      success: function (response) {
+        setSuggestion(response); // store full object
+      },
+      error: function () {
+        alert("Error Fetching ItemList");
+      }
+    });
+  }, []);
+
+  const handelOnChange = (e) => {
+    setUserInputItem(e.target.value);
+  };
+
+  const filteredSuggestions = suggestions.filter(item =>
+    item.itemName
+      .toLowerCase()
+      .includes(userInputItem.toLowerCase())
+  );
 
   return (
     <>
-      <div id="topserchbar">
-        {suggestions.map((item, index) => (
-          <div key={index}>
-            {item}
-          </div>
-        ))}
-      </div>
+      <input
+        name="itemNameSelected"
+        value={userInputItem}
+        onChange={handelOnChange}
+      />
+
+      {userInputItem && filteredSuggestions.length > 0 && (
+        <div id="topserchbar">
+          {filteredSuggestions.map(item => (
+            <div key={item.itemValue}>
+              {item.itemName}
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }

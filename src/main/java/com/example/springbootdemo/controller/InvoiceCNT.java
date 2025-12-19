@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springbootdemo.Service.InvoiceService;
 import com.example.springbootdemo.entity.InvoiceEntity;
+import com.example.springbootdemo.entity.InvoiceItemEntity;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,5 +32,11 @@ public class InvoiceCNT {
         Long invoiceno= invoiceService.getRandomInvoiceNo();
         System.out.println(invoiceno);
         return invoiceno;
+    }
+    @GetMapping("/getItemList")
+    public List<InvoiceItemEntity> getItemList() {
+        
+        return invoiceService.getItemList();
+        
     }
 }
