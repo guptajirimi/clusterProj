@@ -1,0 +1,239 @@
+.hero-container {
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  height: 80vh;
+  background: linear-gradient(to right, #fff5f5, #ffffff);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* LEFT CONTENT */
+.sideDescription {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.tagline {
+  color: #ff4d4d;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.sideDescription h1 {
+  font-size: 48px;
+  margin: 15px 0;
+  line-height: 1.2;
+}
+
+.sideDescription h1 span {
+  color: #ff4d4d;
+}
+
+.sideDescription p {
+  font-size: 17px;
+  color: #555;
+  margin-bottom: 25px;
+  max-width: 480px;
+}
+
+.hero-btn {
+  padding: 12px 26px;
+  background-color: #ff4d4d;
+  border: none;
+  color: white;
+  font-size: 15px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.hero-btn:hover {
+  background-color: #e63e3e;
+}
+
+/* RIGHT CAROUSEL */
+/* RIGHT CAROUSEL */
+.carousel {
+  flex: 1;
+  height: 380px;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  animation: slide 12s infinite;
+}
+
+/* 🔥 MOST IMPORTANT FIX */
+.carousel-track img {
+  min-width: 100%;        /* EACH IMAGE = FULL SLIDE */
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* SMOOTH SLIDE */
+@keyframes slide {
+  0% {
+    transform: translateX(0%);
+  }
+  33% {
+    transform: translateX(-100%);
+  }
+  66% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-container {
+    padding: 40px;
+    height: auto;
+  }
+
+  .sideDescription h1 {
+    font-size: 38px;
+  }
+
+  .sideDescription p {
+    font-size: 16px;
+  }
+
+  .carousel {
+    height: 320px;
+  }
+}
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  .sideDescription {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .sideDescription h1 {
+    font-size: 32px;
+  }
+
+  .sideDescription p {
+    font-size: 15px;
+    margin: 0 auto 20px;
+  }
+
+  .hero-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .carousel {
+    height: 260px;
+    width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .sideDescription h1 {
+    font-size: 26px;
+  }
+
+  .tagline {
+    font-size: 12px;
+  }
+
+  .carousel {
+    height: 220px;
+  }
+}
+/* ================================
+   FOOD CATEGORY SECTION
+================================ */
+.foodCategorySection {
+  padding: 60px 80px;
+  background-color: #ffffff;
+}
+
+/* ================================
+   SECTION HEADING
+================================ */
+.sectionHeading {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 45px;
+  color: #222;
+}
+
+.sectionHeading span {
+  color: #ff4d4d;
+}
+
+/* ================================
+   CARD CONTAINER
+================================ */
+.foodCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ================================
+   SINGLE CARD
+================================ */
+.foodCard {
+  background: #ffffff;
+  padding: 40px 20px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* ================================
+   HOVER EFFECT
+================================ */
+.foodCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 45px rgba(255, 77, 77, 0.25);
+  color: #ff4d4d;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
+@media (max-width: 1024px) {
+  .foodCards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .foodCards {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeading {
+    font-size: 26px;
+  }
+
+  .foodCard {
+    padding: 30px 15px;
+    font-size: 16px;
+  }
+}

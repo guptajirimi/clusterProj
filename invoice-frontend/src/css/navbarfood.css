@@ -1,0 +1,62 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 30px;
+  background-color: #1f2933;
+  color: #ffffff;
+}
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.logo-icon {
+  font-size: 22px;
+  color: #ffb703;
+}
+
+/* Menu */
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.nav-item:hover {
+  opacity: 1;
+}
+
+/* Highlight React section */
+.react-learn {
+  background-color: #61dafb;
+  color: #000;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.openCloseStatus {
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.openCloseStatus.open {
+  color: green;
+}
+
+.openCloseStatus.closed {
+  color: red;
+}
