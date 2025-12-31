@@ -1,0 +1,118 @@
+
+/* Container (parent of all cards) */
+.items-container {
+  display: flex;
+  flex-direction: column;   /* VERTICAL */
+  gap: 16px;
+  padding: 20px;
+}
+
+/* Single card */
+.itemsfood {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.itemsfood:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Food image */
+.itemsfood img {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Title & price */
+.item-info {
+  flex: 1;
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.item-cost {
+  font-size: 14px;
+  color: #777;
+  margin-top: 4px;
+}
+
+/* Plus icon */
+.add-icon {
+  color: #ff6b00;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.add-icon:hover {
+  transform: scale(1.2);
+}
+/* Filters wrapper */
+.filters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 25px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  margin: 20px;
+}
+
+/* Individual filter box */
+.costFilter,
+.ratingFilter {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Select dropdown */
+.costFilter select,
+.ratingFilter select {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+/* Hover & focus effect */
+.costFilter select:hover,
+.ratingFilter select:hover,
+.costFilter select:focus,
+.ratingFilter select:focus {
+  border-color: #ff7a18;
+  box-shadow: 0 0 0 2px rgba(255, 122, 24, 0.15);
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .costFilter select,
+  .ratingFilter select {
+    width: 100%;
+  }
+}

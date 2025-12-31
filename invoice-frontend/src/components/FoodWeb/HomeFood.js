@@ -4,9 +4,11 @@ import food1 from "../../images/food1.jpg";
 import food2 from "../../images/food2.jpg";
 import food3 from "../../images/food3.jpg";
 import FoodCategoriesCard from "./FoodCategoriesCard";
+import NavbarFood from "./NavbarFood";
 function HomeFood() {
   return (
     <>
+    <NavbarFood />
       {/* Hero Section */}
       <div className="hero-container">
 

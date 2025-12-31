@@ -70,7 +70,9 @@ console.log(openCloseStatus()); // "Open" or "Closed"
 
         <div className="nav-item">
           <FaUtensils />
+          <Link to="/Items">
           <span>Menu</span>
+          </Link>
         </div>
 
         <div className="nav-item">
@@ -79,8 +81,10 @@ console.log(openCloseStatus()); // "Open" or "Closed"
         </div>
 
         <div className="nav-item">
+          <Link to="/Cart">
           <FaShoppingCart />
           <span>Cart</span>
+          </Link>
         </div>
 
         <div className="nav-item">

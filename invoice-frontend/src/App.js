@@ -9,6 +9,7 @@ import DashboardLayout from './components/DashboardLayout';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavbarFood from './components/FoodWeb/NavbarFood';
 import HomeFood from './components/FoodWeb/HomeFood';
+import Items from './components/FoodWeb/Items';
 
 function App() {
   return (
@@ -17,16 +18,11 @@ function App() {
         
          
         <Route path="/" element={<NavbarFood />} />
-
-         
-        <Route path="/dashboard" element={<DashboardLayout />}>
-
-           
           <Route path="home" element={<HomeFood />} />	
-          <Route path="MyForm" element={<MyForm />} />
+          <Route path="Items" element={<Items />} />
           <Route path="ResumeBuilder" element={<ResumeBuilder />} />
 
-        </Route>
+         
 
       </Routes>
     </Router>
