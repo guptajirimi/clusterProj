@@ -15,7 +15,7 @@ import {
  
 import {Link} from "react-router-dom";
 
-function NavbarFood() {
+function NavbarFood(props) {
  const openTime = "9am";
 const closeTime = "12pm";
 const isloggedIn=true;
@@ -83,7 +83,7 @@ console.log(openCloseStatus()); // "Open" or "Closed"
         <div className="nav-item">
           <Link to="/Cart">
           <FaShoppingCart />
-          <span>Cart</span>
+          <span>Cart {props.count}</span>
           </Link>
         </div>
 

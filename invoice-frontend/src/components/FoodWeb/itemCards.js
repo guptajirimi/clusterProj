@@ -1,40 +1,33 @@
 import React from "react";
 import itemImage from "../../images/food1.jpg";
-import { FaPlus ,FaMinus} from "react-icons/fa";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import "../../css/Items.css";
-import { useState } from "react";
 
-function ItemCards(props) {
-	const[count,setCount]=useState(0);
-	const handelAdd=()=>{
-		setCount(count+1);	
-    props.addtoCart({
-      title:props.title,
-      cost:props.cost
+function ItemCards({ id, name, cost, qty, onChange }) {
 
-    })
-	}
-	const handelRemove=()=>{
-		if(count>0){
-		setCount(count-1);	
-		}
-	}
-  
+  const handleAdd = () => {
+    onChange(id, qty + 1);
+  };
+
+  const handleRemove = () => {
+    if (qty > 0) {
+      onChange(id, qty - 1);
+    }
+  };
+
   return (
     <div className="itemsfood">
-      <img src={itemImage} alt={props.title} />
+      <img src={itemImage} alt={name} />
       <div className="item-info">
-        <span className="item-title">{props.title}</span>
-        <span className="item-cost">₹{props.cost}</span>
+        <span className="item-title">{name}</span>
+        <span className="item-cost">₹{cost}</span>
       </div>
-      <FaMinus  className="remove-icon" onClick={handelRemove} />
-      <span className="counter">{count}</span>
-      <FaPlus className="add-icon" onClick={handelAdd} />
+
+      <FaPlus onClick={handleAdd} />
+      {qty}
+      <FaMinus onClick={handleRemove} />
     </div>
   );
 }
-
- 
-
 
 export default ItemCards;

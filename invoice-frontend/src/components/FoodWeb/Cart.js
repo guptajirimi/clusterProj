@@ -1,15 +1,29 @@
 import React from "react";
 
-const Cart=()=>
-{
-    return(
-        <>
-            <div className="itemName">
-                <h2>Items</h2>||<h2>Qty</h2> || <h2>Cost</h2>
-                    
-            </div>
-        </>
-    )
-}
+const Cart = ({ itemList }) => {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Cost</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {itemList.map((item) => (
+          <tr key={item.id}>
+            <td>{item.name}</td>
+            <td>₹{item.cost}</td>
+            <td>{item.qty}</td>
+            <td>₹{item.cost * item.qty}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
 export default Cart;
