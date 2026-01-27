@@ -60,3 +60,23 @@
 .openCloseStatus.closed {
   color: red;
 }
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 6px 10px;
+  border-radius: 20px;
+  gap: 6px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 140px;
+}
+
+.search-icon {
+  cursor: pointer;
+  color: #666;
+}

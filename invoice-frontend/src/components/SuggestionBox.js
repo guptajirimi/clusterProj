@@ -30,9 +30,9 @@ function SuggestionBox() {
   );
 
   return (
-    <>
+    <><label htmlFor="">Item Name:</label>
       <input
-        name="itemNameSelected"
+        name="itemNameSelected" style={{width:"40"}}
         value={userInputItem}
         onChange={handelOnChange}
       />

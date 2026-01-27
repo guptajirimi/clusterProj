@@ -1,387 +1,104 @@
-import React, { useEffect } from "react";
-import "../css/invoice.css";
-import { useState } from "react";
-import $ from "jquery";
-import SuggestionBox from "./SuggestionBox";
+import React, { useState } from "react";
 
-function Invoice() {
-const today = new Date().toISOString().split("T")[0];
- const [sgst, setSgst] = useState(0);
-    const [cgst, setCgst] = useState(0);
-	const [itemList, setItemList] = useState([
-		{
-			snNo: "",
-			Qty: "",
-			Rack: "",
-			Product: "",
-			Batch: "",
-			Exp: "",
-			HSN: "",
-			MRP: "",
-			Rate: "",
-			Dis: "",
-			SGST: "",
-			CGST: "",
-			Amount: ""
-		}
-	]);
+export default function VillageMarketTracker() {
+  const [crop, setCrop] = useState("");
+  const [market, setMarket] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
 
-	const addDynamicList = () => {
-		setItemList([
-			...itemList,
-			{
-				snNo: "",
-				Qty: "",
-				Rack: "",
-				Product: "",
-				Batch: "",
-				Exp: "",
-				HSN: "",
-				MRP: "",
-				Rate: "",
-				Dis: "",
-				SGST: "",
-				CGST: "",
-				Amount: ""
-			}
-		]);
-	};
+  const [prices, setPrices] = useState([
+    { id: 1, crop: "Tomato", market: "Local Market", price: 30, quantity: "10 kg", date: "2025-12-20" },
+    { id: 2, crop: "Potato", market: "Market A", price: 25, quantity: "5 kg", date: "2025-12-20" },
+  ]);
 
-	 
-	const [invoiceFormData, setinvoiceFormData] = useState({
-    IssuerSign: "",
-    receiverSign: "",
-    duedateTillPayment: "",
-    dateEntry: today,
-    invoiceNo: "",
-    salesMan: "",
-    dlno: "",
-    emailOfIssuer: "",
-    gstinNo: "",
-    invoiceGeneratorName: "",
-    invoiceToName: "",
-    invoiceGeneratorAdress: "",
-    invoiceGeneratorPhno: ""
-});
+  const addPrice = () => {
+    if (!crop || !market || !price) return;
+    const newPrice = {
+      id: Date.now(),
+      crop,
+      market,
+      price,
+      quantity,
+      date,
+    };
+    setPrices([newPrice, ...prices]);
+    setCrop(""); setMarket(""); setPrice(""); setQuantity(""); setDate(new Date().toISOString().substr(0,10));
+  };
 
+  return (
+    <div style={{ maxWidth: 800, margin: "auto", padding: 20, fontFamily: "Arial" }}>
+      <h1 style={{ textAlign: "center", color: "#2c3e50" }}>🌾 Village Market Price Tracker</h1>
 
-	const handelChange = (e) => {
-		var name = e.target.name;
-		var value = e.target.value;
+      {/* Price Entry Form */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20, padding: 10, border: "1px solid #ddd", borderRadius: 8 }}>
+        <input
+          placeholder="Crop"
+          value={crop}
+          onChange={e => setCrop(e.target.value)}
+          style={{ flex: 1, padding: 8, borderRadius: 5, border: "1px solid #ccc" }}
+        />
+        <input
+          placeholder="Market"
+          value={market}
+          onChange={e => setMarket(e.target.value)}
+          style={{ flex: 1, padding: 8, borderRadius: 5, border: "1px solid #ccc" }}
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={e => setPrice(e.target.value)}
+          style={{ flex: 1, padding: 8, borderRadius: 5, border: "1px solid #ccc" }}
+        />
+        <input
+          placeholder="Quantity (e.g., 10 kg)"
+          value={quantity}
+          onChange={e => setQuantity(e.target.value)}
+          style={{ flex: 1, padding: 8, borderRadius: 5, border: "1px solid #ccc" }}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={e => setDate(e.target.value)}
+          style={{ flex: 1, padding: 8, borderRadius: 5, border: "1px solid #ccc" }}
+        />
+        <button
+          onClick={addPrice}
+          style={{ flex: "0 0 100px", padding: 10, borderRadius: 5, background: "#27ae60", color: "#fff", border: "none", cursor: "pointer" }}
+        >
+          Add
+        </button>
+      </div>
 
-		setinvoiceFormData((prev) => ({
-			...prev,
-			[name]: value
-		}));
-	};
-	
-	const subtotal=itemList.reduce((sum,item)=>
-		{
-			return sum + (Number(item.Amount) || 0);
-		}, 0);
-		 
+      {/* Price Table */}
+      <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 20 }}>
+        <thead>
+          <tr style={{ background: "#34495e", color: "#fff" }}>
+            <th style={{ padding: 10 }}>Date</th>
+            <th style={{ padding: 10 }}>Crop</th>
+            <th style={{ padding: 10 }}>Market</th>
+            <th style={{ padding: 10 }}>Price</th>
+            <th style={{ padding: 10 }}>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {prices.map(p => (
+            <tr key={p.id} style={{ textAlign: "center", borderBottom: "1px solid #ddd" }}>
+              <td style={{ padding: 8 }}>{p.date}</td>
+              <td style={{ padding: 8 }}>{p.crop}</td>
+              <td style={{ padding: 8 }}>{p.market}</td>
+              <td style={{ padding: 8 }}>₹ {p.price}</td>
+              <td style={{ padding: 8 }}>{p.quantity}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
- 
-
-useEffect(()=> {
-    // Call once when page loads
-    $.ajax({
-        url: 'http://localhost:90/invoice/getGST',
-        contentType: "application/json",
-        type: "GET",
-        success: function(response) {
-			 response.forEach(function(item){
-				if(item.tax_name==="SGST")
-				{
-					setSgst(item.tax_value);
-				}
-				else if(item.tax_name==="CGST")
-				{
-					setCgst(item.tax_value);
-				}
-			 }
-
-			 )
-        },
-        error: function(err) {
-            console.error("Error fetching GST:", err);
-        }
-    });
-},[]);
-useEffect(() => {
-    $.ajax({
-        url:"http://localhost:90/invoice/getRandomInvoiceNo",
-        contentType:"application/json",
-        type:"GET",
-        success:function(responce){
-            setinvoiceFormData(prev => ({
-                ...prev,
-                invoiceNo: responce
-            }));
-        },
-        error: function(err) {
-            console.error("Error fetching Invoice No:", err);
-        }
-    });
-}, []);
-
-	return (
-		<>
-		 <SuggestionBox/>  
-			<div className="invoiceMainContainer">
-
-				{/* Header */}
-				<div className="headerSection">
-					<input
-						name="invoiceGeneratorName"
-						id="invoiceGeneratorName"
-						placeholder="Generator Name"
-						onChange={handelChange}
-						value={invoiceFormData.invoiceGeneratorName}
-					/>
-					<input
-						name="invoiceToName"
-						id="invoiceToName"
-						placeholder="Invoice To"
-						onChange={handelChange}
-						value={invoiceFormData.invoiceToName}
-					/>
-					<input
-						name="invoiceGeneratorAdress"
-						id="invoiceGeneratorAdress"
-						placeholder="Address"
-						onChange={handelChange}
-						value={invoiceFormData.invoiceGeneratorAdress}
-					/>
-					<input
-						name="invoiceGeneratorPhno"
-						id="invoiceGeneratorPhno"
-						maxLength={10}
-						placeholder="Phone No"
-						onChange={handelChange}
-						value={invoiceFormData.invoiceGeneratorPhno}
-					/>
-				</div>
-
-				{/* GST Section */}
-				<div className="GST-section">
-
-					<div className="gstDetailsSecOne">
-						<input
-							name="dlno"
-							id="dlno"
-							placeholder="DL No"
-							onChange={handelChange}
-							value={invoiceFormData.dlno}
-						/>
-						<input
-							name="emailOfIssuer"
-							id="emailOfIssuer"
-							placeholder="Email"
-							onChange={handelChange}
-							value={invoiceFormData.emailOfIssuer}
-						/>
-						<input
-							name="gstinNo"
-							id="gstinNo"
-							placeholder="GSTIN"
-							onChange={handelChange}
-							value={invoiceFormData.gstinNo}
-						/>
-					</div>
-
-					<div className="gstDetailsSecTwo">
-						<h3>GST Invoice</h3>
-					</div>
-
-					<div className="gstDetailsSecThree">
-
-						<div className="gstInsideFlexOne">
-							<input
-								name="invoiceNo"
-								id="invoiceNo"
-								placeholder="Invoice No"
-								onChange={handelChange}
-								value={invoiceFormData.invoiceNo} readOnly
-							/>
-							<input
-								name="salesMan"
-								id="salesMan"
-								placeholder="Salesman"
-								onChange={handelChange}
-								value={invoiceFormData.salesMan}
-							/>
-						</div>
-
-						<div className="gstInsideFlexTwo">
-							<input
-								 
-								name="dateEntry"
-								id="dateEntry"
-								onChange={handelChange}
-								value={invoiceFormData.dateEntry}
-							/>
-							<input
-								type="date"
-								name="duedateTillPayment"
-								id="duedateTillPayment"
-								onChange={handelChange}
-								value={invoiceFormData.duedateTillPayment}
-							/>
-						</div>
-
-					</div>
-				</div>
-
-				{/* Dynamic Item List */}
-				<div className="dynamicList">
-					<table>
-						<thead>
-							<tr>
-								<th>Sn No.</th>
-								<th>Qty</th>
-								<th>Pack</th>
-								<th>Product</th>
-								<th>Batch</th>
-								<th>Exp</th>
-								<th>HSN</th>
-								<th>MRP</th>
-								<th>Rate</th>
-								<th>Dis</th>
-								<th>SGST</th>
-								<th>CGST</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							{itemList.map((item, index) => (
-								<tr key={index}>
-									<td><input value={item.snNo} placeholder="Sn No"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].snNo = e.target.value;
-											setItemList(update);
-										}
-										} /></td>
-									<td><input value={item.Qty} placeholder="Qty"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Qty = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.Rack} placeholder="Pack"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Rack = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.Product} placeholder="Product Name"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Product = e.target.value;
-											setItemList(update);
-										}}
-				  /></td>
-									<td><input value={item.Batch} placeholder="Batch No"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Batch = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.Exp} placeholder="MM/YY"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Exp = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.HSN} placeholder="HSN Code"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].HSN = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.MRP} placeholder="MRP"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].MRP = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.Rate} placeholder="Rate"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Rate = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.Dis} placeholder="Discount"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].Dis = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.SGST} placeholder="SGST %" step={1} min={0} type="number"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].SGST = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td><input value={item.CGST} placeholder="CGST %" step={1} min={0} type="number"
-										onChange={(e) => {
-											const update = [...itemList];
-											update[index].CGST = e.target.value;
-											setItemList(update);
-										}}
-									/></td>
-									<td>
-										<input value={item.Amount} placeholder="Amount"
-											onChange={(e) => {
-												const update = [...itemList];
-												update[index].Amount = e.target.value;
-												setItemList(update);
-											}}
-										/>
-										
-									</td>
-								</tr>
-							))}<i className="fa fa-plus" onClick={addDynamicList}></i>
-						</tbody>
-					</table>
-				</div>
-
-				{/* Totals */}
-				<div className="totalAmountSec">
-					<p>Sub Total :{subtotal}</p>
-					<p>With SGST{sgst} :</p>
-					<p>With CGST{cgst} :</p>
-					<p>Total Amount :</p>
-				</div>
-
-				{/* Signature */}
-				<div className="signatureSection">
-					<input
-						name="receiverSign"
-						onChange={handelChange}
-						value={invoiceFormData.receiverSign}
-					/>
-					<input
-						name="IssuerSign"
-						onChange={handelChange}
-						value={invoiceFormData.IssuerSign}
-					/>
-				</div>
-
-			</div>
-		</>
-	);
+      {/* Placeholder for Charts */}
+      <div style={{ padding: 20, border: "1px dashed #bbb", borderRadius: 8, textAlign: "center", color: "#888" }}>
+        📊 Price Trends / Charts will appear here
+      </div>
+    </div>
+  );
 }
-
-export default Invoice;

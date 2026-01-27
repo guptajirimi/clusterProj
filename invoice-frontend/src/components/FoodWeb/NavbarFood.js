@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css/navbarfood.css";
 
 import {
@@ -13,7 +13,7 @@ import {
   FaReact
 } from "react-icons/fa";
  
-import {Link} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 
 function NavbarFood(props) {
  const openTime = "9am";
@@ -45,8 +45,9 @@ const openCloseStatus = function () {
   }
 };
 
-console.log(openCloseStatus()); // "Open" or "Closed"
-
+const[search,setSearch]=useState("");
+ 
+const navigate=useNavigate();
 
   return (
     <div className="navbar">
@@ -58,9 +59,29 @@ console.log(openCloseStatus()); // "Open" or "Closed"
         {openCloseStatus()}
       </span>
       </div>
+<div className="nav-item search-box">
+  <input
+    type="text"
+    placeholder="Search items..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === "Enter") {
+        navigate(`/Items?search=${search}`);
+      }
+    }}
+  />
+
+  <FaSearch
+    className="search-icon"
+    onClick={() => navigate(`/Items?search=${search}`)}
+  />
+</div>
 
       {/* Menu Items */}
+      
       <div className="navbar-menu">
+        
         <div className="nav-item">
           <Link to="/home" >
           <FaHome />
@@ -75,10 +96,7 @@ console.log(openCloseStatus()); // "Open" or "Closed"
           </Link>
         </div>
 
-        <div className="nav-item">
-          <FaSearch />
-          <span>Search</span>
-        </div>
+        
 
         <div className="nav-item">
           <Link to="/Cart">
@@ -87,29 +105,22 @@ console.log(openCloseStatus()); // "Open" or "Closed"
           </Link>
         </div>
 
-        <div className="nav-item">
-          <FaClipboardList />
-          <span>Orders</span>
-        </div>
+       
 
         <div className="nav-item">
           <FaTags />
+          <Link to="/Offers">
           <span>Offers</span>
+          </Link>
         </div>
 
-        <div className="nav-item">
-          <FaUserShield />
-          <span>Admin</span>
-        </div>
+         
+        {isloggedIn ? (
+  <button onClick={() => navigate("/login")}>Logout</button>
+) : (
+  <button onClick={() => navigate("/login")}>Login</button>
+)}
 
-        <div className="nav-item">
-          <FaUser />
-          <span>Profile</span>
-        </div>
-         {isloggedIn ? (
-          <button>Logout</button>):
-          (<button>Login</button>)
-         }
 
          
       </div>

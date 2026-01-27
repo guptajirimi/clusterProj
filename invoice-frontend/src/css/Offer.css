@@ -1,0 +1,134 @@
+/* Offer.css */
+
+.offerPage {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f5f8fb 0%, #e8eef6 100%);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  background-image: url("../images/offers.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Light overlay so image color is visible */
+.offerPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35);
+  z-index: 0;
+}
+
+.offerHeader {
+  width: 420px;
+  max-width: 100%;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #000000, #2b2b2b);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.offerHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.offerHeader .subTitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.offerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.offerTags {
+  width: 420px;
+  max-width: 100%;
+  background: #ffffff;
+  color: #1f2a44;
+  padding: 16px 18px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  border-left: 5px solid #25d366;
+  position: relative;
+  z-index: 3;
+}
+
+.offerTags span {
+  display: block;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.offerTags p {
+  margin: 6px 0 0 0;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.offerFooter {
+  margin-top: auto;
+  padding: 14px 20px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+  position: relative;
+  z-index: 2;
+}
+.offerTagsEnabled {
+  width: 420px;
+  max-width: 100%;
+  background: #ffffff;
+  color: #1f2a44;
+  padding: 16px 18px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  border-left: 5px solid #22c55e;
+  position: relative;
+  z-index: 3;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.offerTagsEnabled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+.offerTagsDisabled {
+  width: 420px;
+  max-width: 100%;
+  background: #f1f5f9;
+  color: #9ca3af;
+  padding: 16px 18px;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  border-left: 5px solid #cbd5e1;
+  position: relative;
+  z-index: 3;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.offerTagsDisabled span {
+  color: #6b7280;
+}
+
+.offerTagsDisabled p {
+  color: #9ca3af;
+}
