@@ -1,12 +1,11 @@
 import React from "react";
 import "../../css/Offer.css";
 import NavbarFood from "./NavbarFood";
-import { Link, useLocation } from "react-router-dom";
+import { Link  } from "react-router-dom";
 
-function Offers({ offers }) {
-  const location = useLocation();
-  const subtotal = location.state?.grandTotal ?? null;
-
+function Offers({ offers,charges,dispatch }) {
+  const  grandTotal=charges.subTotal+charges.deliveryCharges+charges.govCharges;
+ 
   return (
     <>
       <NavbarFood />
@@ -19,13 +18,13 @@ function Offers({ offers }) {
         <div className="offerWrapper">
           {offers.map((item) => {
           const isEligible =
-      subtotal !== null && subtotal >= item.elegiLityCreteria;
+      grandTotal !== null && grandTotal >= item.elegiLityCreteria;
           
           return(
           
             <Link
               to="/Cart"
-              state={{ selectedOffer: item }}
+              onClick={()=>dispatch({type: "SEL_OFFER",id:item.id})}
               className={isEligible ? "offerTagsEnabled" : "offerTagsDisabled"}
               key={item.id}
             >

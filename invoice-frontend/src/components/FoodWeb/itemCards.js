@@ -4,17 +4,7 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import "../../css/Items.css";
 
 function ItemCards({ id, name, cost, qty, onChange }) {
-
-  const handleAdd = () => {
-    onChange(id, qty + 1);
-  };
-
-  const handleRemove = () => {
-    if (qty > 0) {
-      onChange(id, qty - 1);
-    }
-  };
-
+ 
   return (
     <div className="itemsfood">
       <img src={itemImage} alt={name} />
@@ -23,9 +13,9 @@ function ItemCards({ id, name, cost, qty, onChange }) {
         <span className="item-cost">₹{cost}</span>
       </div>
 
-      <FaPlus onClick={handleAdd} />
+      <FaPlus onClick={()=>onChange(id,"INCREMENT_QTY")} />
       {qty}
-      <FaMinus onClick={handleRemove} />
+      <FaMinus onClick={()=>onChange(id,"DECREMENT_QTY")} />
     </div>
   );
 }

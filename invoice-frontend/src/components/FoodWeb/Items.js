@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import ItemCards from "./itemCards";  
+ import ItemCards from "./itemCards";  
 import NavbarFood from "./NavbarFood";
 import "../../css/Items.css";
 import { useLocation } from "react-router-dom";
- 
+import useCart from "../../customHooks/useCart";
+  
 
-function Items({itemList,setItemList}) {
+function Items({itemList,dispatch}) {
 
   const location=useLocation();
 const query=new URLSearchParams(location.search);
@@ -15,41 +15,31 @@ const searchTerm=query.get("search") || "";
   item.name.toLowerCase().includes(searchTerm.toLowerCase())
 );
  
-  const updateQtyCounter = (id, qty) => {
-    
-
-    setItemList(prev =>
-    prev.map(item =>
-      item.id === id
-        ? { ...item, qty }
-        : item
-    )
-  );
+  const updateQtyCounter = (id, actionType) => {
+    dispatch({
+      type:actionType,
+      id:id
+    });
+   
 };
-    
- 
-
-  let totalCartValue = 0;
-  Object.values(itemList).forEach(item => {
-    totalCartValue += item.qty;
-  });
-
+    const {totalCartValue} =useCart(itemList);
   return (
     <>
       <NavbarFood count={totalCartValue} />
       
-      <div className="items-container">
-        {filteredItems.map(item => (
-          <ItemCards
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            cost={item.cost}
-            qty={item.qty}
-            onChange={updateQtyCounter}
-          />
-        ))}
-      </div>
+     <div className="items-container">
+  {filteredItems.map(item => (
+    <ItemCards
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      cost={item.cost}
+      qty={item.qty}
+      onChange={updateQtyCounter}
+    />
+  ))}
+</div>
+
     </>
   );
 }

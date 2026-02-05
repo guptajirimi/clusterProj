@@ -11,47 +11,34 @@ import NavbarFood from './components/FoodWeb/NavbarFood';
 import HomeFood from './components/FoodWeb/HomeFood';
 import Items from './components/FoodWeb/Items';
 import Cart from './components/FoodWeb/Cart';
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import Offers from './components/FoodWeb/Offers';
+ import itemListReducer from './reducers/itemListReducer';
+import useCart from './customHooks/useCart';
+import offerReducer from './reducers/offerReducer';
+ 
 function App() {
-  const [itemList, setItemList] = useState([
+  const initialItemList=([
   { id: 1, name: "Rice", cost: 10, qty: 0 },
   { id: 2, name: "Roti", cost: 3, qty: 0 },
   { id: 3, name: "Dal", cost: 25, qty: 0 },
-  { id: 4, name: "Sabji", cost: 11, qty: 0 },
-
-  // Snacks
-  { id: 5, name: "Samosa", cost: 15, qty: 0 },
-  { id: 6, name: "Pakora", cost: 20, qty: 0 },
-  { id: 7, name: "Vada Pav", cost: 25, qty: 0 },
-
-  // Main Course
-  { id: 8, name: "Paneer Butter Masala", cost: 80, qty: 0 },
-  { id: 9, name: "Chole Bhature", cost: 60, qty: 0 },
-  { id: 10, name: "Veg Biryani", cost: 90, qty: 0 },
-
-  // Fast Food
-  { id: 11, name: "Veg Burger", cost: 50, qty: 0 },
-  { id: 12, name: "Veg Pizza", cost: 120, qty: 0 },
-  { id: 13, name: "French Fries", cost: 40, qty: 0 },
-
-  // Beverages
-  { id: 14, name: "Tea", cost: 10, qty: 0 },
-  { id: 15, name: "Coffee", cost: 15, qty: 0 },
-  { id: 16, name: "Cold Drink", cost: 25, qty: 0 },
-
-  // Desserts
-  { id: 17, name: "Gulab Jamun", cost: 30, qty: 0 },
-  { id: 18, name: "Ice Cream", cost: 35, qty: 0 },
+  { id: 4, name: "Sabji", cost: 11, qty: 0 }
+ 
 ]);
+  const [itemList, dispatch] = useReducer(itemListReducer,initialItemList);
+  const {subTotal}=useCart(itemList);
+  const charges=({subTotal:subTotal,deliveryCharges:13,govCharges:15});
 
-   const [offers,setOffers]=useState([
-    {id:1,elegiLityCreteria:159,Discount:50},
-    {id:2,elegiLityCreteria:299,Discount:100},
-    {id:3,elegiLityCreteria:399,Discount:150},
-    {id:4,elegiLityCreteria:599,Discount:180}
-   ]) 
-    
+  const initialOffers=([
+    {id:1,elegiLityCreteria:159,Discount:50,selected: false},
+    {id:2,elegiLityCreteria:299,Discount:100,selected: false},
+    {id:3,elegiLityCreteria:399,Discount:150,selected: false},
+    {id:4,elegiLityCreteria:599,Discount:180,selected: false}
+  ])
+
+
+   const [offers,dispatchOffer]=useReducer(offerReducer,initialOffers) ;
+    const selectedOffer=offers.find(o=>o.selected);
   return (
     <Router>
       
@@ -60,9 +47,9 @@ function App() {
          
         <Route path="home" element={<HomeFood />} />
           <Route path="/" element={<HomeFood />} />	
-          <Route path="Items" element={<Items itemList={itemList} setItemList={setItemList}/>} />
-          <Route path="Cart" element={<Cart itemList={itemList} />} />
-          <Route path="/Offers" element={<Offers  offers={offers} setOffers={setOffers}/>} />
+          <Route path="Items" element={<Items itemList={itemList} dispatch={dispatch}/>} />
+          <Route path="Cart" element={<Cart itemList={itemList} charges={charges} selectedOffer={selectedOffer}/>} />
+          <Route path="/Offers" element={<Offers  offers={offers}  dispatch={dispatchOffer} charges={charges}/>} />
          <Route path="login" element={<Login/>} />
 
       </Routes>

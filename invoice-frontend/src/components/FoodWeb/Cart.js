@@ -1,24 +1,19 @@
 import React from "react";
 import "../../css/cart.css";
 import NavbarFood from "./NavbarFood";
-import {Link, useLocation} from "react-router-dom";
+import {Link } from "react-router-dom";
+import useCart from "../../customHooks/useCart";
 
-const Cart = ({ itemList }) => {
-const location=useLocation();
-const selectedOffer=location.state?.selectedOffer || null;
-
-  const subTotal=itemList.reduce(
-    (sum,item)=>sum +item.cost*item.qty,0
-  )
-
-  const deliveryCharges = subTotal > 0 ? 30 : 0;
-  const govCharges = subTotal > 0 ? Math.round(subTotal * 0.05) : 0;
+const Cart = ({ itemList ,charges,selectedOffer}) => {
+  
+ const {subTotal} =useCart(itemList);
+ 
   let discount=0;
   if(selectedOffer && subTotal>=selectedOffer.elegiLityCreteria)
   {
     discount=selectedOffer.Discount;
   }
-  const grandTotal = subTotal + deliveryCharges + govCharges-discount;
+  const grandTotal = subTotal + charges.deliveryCharges + charges.govCharges-discount;
 
   return (
     <>
@@ -48,7 +43,7 @@ const selectedOffer=location.state?.selectedOffer || null;
           )}
         </tbody>
       </table>
-<Link to="/Offers" className="applyVoucher" state={{grandTotal}}>
+<Link to="/Offers" className="applyVoucher"  >
   <span>Apply Voucher</span>
 </Link>
 
@@ -59,11 +54,11 @@ const selectedOffer=location.state?.selectedOffer || null;
         </div>
         <div>
           <span>Delivery Charges</span>
-          <span>₹{deliveryCharges}</span>
+          <span>₹{charges.deliveryCharges}</span>
         </div>
         <div>
           <span>Gov Charges</span>
-          <span>₹{govCharges}</span>
+          <span>₹{charges.govCharges}</span>
         </div>
         <hr />
         <div>
