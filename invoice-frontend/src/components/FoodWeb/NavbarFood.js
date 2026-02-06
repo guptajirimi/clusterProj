@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../css/navbarfood.css";
 
 import {
@@ -16,6 +16,13 @@ import {
 import {Link, Navigate, useNavigate} from "react-router-dom";
 
 function NavbarFood(props) {
+  const[search,setSearch]=useState("");
+ 
+const navigate=useNavigate();
+const inputSearch=useRef(null);
+ useEffect(()=>{
+    inputSearch.current.focus();
+ },[]);
  const openTime = "9am";
 const closeTime = "12pm";
 const isloggedIn=true;
@@ -45,9 +52,6 @@ const openCloseStatus = function () {
   }
 };
 
-const[search,setSearch]=useState("");
- 
-const navigate=useNavigate();
 
   return (
     <div className="navbar">
@@ -61,6 +65,7 @@ const navigate=useNavigate();
       </div>
 <div className="nav-item search-box">
   <input
+  ref={inputSearch}
     type="text"
     placeholder="Search items..."
     value={search}
@@ -73,6 +78,7 @@ const navigate=useNavigate();
   />
 
   <FaSearch
+   
     className="search-icon"
     onClick={() => navigate(`/Items?search=${search}`)}
   />

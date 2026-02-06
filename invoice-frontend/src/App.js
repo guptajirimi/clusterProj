@@ -18,13 +18,33 @@ import useCart from './customHooks/useCart';
 import offerReducer from './reducers/offerReducer';
  
 function App() {
-  const initialItemList=([
-  { id: 1, name: "Rice", cost: 10, qty: 0 },
-  { id: 2, name: "Roti", cost: 3, qty: 0 },
-  { id: 3, name: "Dal", cost: 25, qty: 0 },
-  { id: 4, name: "Sabji", cost: 11, qty: 0 }
- 
-]);
+ const initialItemList = [
+  { id: 1, name: "Rice", cost: 10, qty: 0, category: "North Indian", featured: false },
+  { id: 2, name: "Roti", cost: 3, qty: 0, category: "North Indian", featured: false },
+  { id: 3, name: "Dal", cost: 25, qty: 0, category: "North Indian", featured: true },
+  { id: 4, name: "Sabji", cost: 11, qty: 0, category: "North Indian", featured: false },
+
+  { id: 5, name: "Dosa", cost: 20, qty: 0, category: "South Indian", featured: true },
+  { id: 6, name: "Idli", cost: 15, qty: 0, category: "South Indian", featured: false },
+  { id: 7, name: "Sambar", cost: 12, qty: 0, category: "South Indian", featured: false },
+  { id: 8, name: "Vada", cost: 10, qty: 0, category: "South Indian", featured: false },
+
+  { id: 9, name: "Sushi", cost: 50, qty: 0, category: "Asian", featured: true },
+  { id: 10, name: "Noodles", cost: 35, qty: 0, category: "Asian", featured: false },
+  { id: 11, name: "Fried Rice", cost: 40, qty: 0, category: "Asian", featured: false },
+  { id: 12, name: "Spring Roll", cost: 25, qty: 0, category: "Asian", featured: false },
+
+  { id: 13, name: "Bibimbap", cost: 60, qty: 0, category: "Korean", featured: true },
+  { id: 14, name: "Kimchi", cost: 20, qty: 0, category: "Korean", featured: false },
+  { id: 15, name: "Tteokbokki", cost: 30, qty: 0, category: "Korean", featured: false },
+  { id: 16, name: "Bulgogi", cost: 70, qty: 0, category: "Korean", featured: true },
+
+  { id: 17, name: "Pizza", cost: 80, qty: 0, category: "Italian", featured: true },
+  { id: 18, name: "Pasta", cost: 50, qty: 0, category: "Italian", featured: false },
+  { id: 19, name: "Lasagna", cost: 60, qty: 0, category: "Italian", featured: false },
+  { id: 20, name: "Garlic Bread", cost: 25, qty: 0, category: "Italian", featured: false },
+];
+
   const [itemList, dispatch] = useReducer(itemListReducer,initialItemList);
   const {subTotal}=useCart(itemList);
   const charges=({subTotal:subTotal,deliveryCharges:13,govCharges:15});
