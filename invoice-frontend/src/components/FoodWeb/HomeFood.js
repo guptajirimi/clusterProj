@@ -6,7 +6,10 @@ import food3 from "../../images/food3.jpg";
 import FoodCategoriesCard from "./FoodCategoriesCard";
 import NavbarFood from "./NavbarFood";
 import useCart from "../../customHooks/useCart";
-function HomeFood() {
+import { useNavigate } from "react-router-dom";
+function HomeFood({categoryList}) {
+   
+  const navigate=useNavigate();
    return (
     <>
     <NavbarFood />
@@ -51,10 +54,11 @@ function HomeFood() {
         </h2>
 
         <div className="foodCards">
-          <FoodCategoriesCard title="North Indian"/>
-          <FoodCategoriesCard title="South Indian"/>
-          <FoodCategoriesCard title="Asian"/>
-          <FoodCategoriesCard title="Korean"/>
+          {categoryList.map((item)=>(
+             <FoodCategoriesCard  key={item.id} title={item.categoryName} onClick={() => navigate(`/Items?category=${item.categoryName}&id=${item.id}`)}/>
+          ))}
+           
+
         </div>
 
       </div>

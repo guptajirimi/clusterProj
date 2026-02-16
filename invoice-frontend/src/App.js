@@ -55,7 +55,13 @@ function App() {
     {id:3,elegiLityCreteria:399,Discount:150,selected: false},
     {id:4,elegiLityCreteria:599,Discount:180,selected: false}
   ])
-
+const categoryList=[
+    {id:1,categoryName:"NorthIndia"},
+    {id:2,categoryName:"South Indian"},
+    {id:3,categoryName:"Asian"},
+    {id:4,categoryName:"Korean"},
+    {id:5,categoryName:"Italian"}
+  ]
 
    const [offers,dispatchOffer]=useReducer(offerReducer,initialOffers) ;
     const selectedOffer=offers.find(o=>o.selected);
@@ -65,9 +71,9 @@ function App() {
       <Routes>
         
          
-        <Route path="home" element={<HomeFood />} />
-          <Route path="/" element={<HomeFood />} />	
-          <Route path="Items" element={<Items itemList={itemList} dispatch={dispatch}/>} />
+        <Route path="home" element={<HomeFood  categoryList={categoryList}/>} />
+          <Route path="/" element={<HomeFood categoryList={categoryList} />} />	
+          <Route path="Items" element={<Items itemList={itemList} dispatch={dispatch} categoryList={categoryList}/>} />
           <Route path="Cart" element={<Cart itemList={itemList} charges={charges} selectedOffer={selectedOffer}/>} />
           <Route path="/Offers" element={<Offers  offers={offers}  dispatch={dispatchOffer} charges={charges}/>} />
          <Route path="login" element={<Login/>} />

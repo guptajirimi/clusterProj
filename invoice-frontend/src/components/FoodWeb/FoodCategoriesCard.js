@@ -1,9 +1,9 @@
 import React from "react";
 
-const FoodCategoriesCard=({title})=>{
+const FoodCategoriesCard=({title,onClick})=>{
 return(
     <>
-        <div className="foodCard">
+        <div className="foodCard" onClick={onClick}>
             {title}
         </div>
     </>

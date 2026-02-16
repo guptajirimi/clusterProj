@@ -5,11 +5,13 @@ import { useLocation } from "react-router-dom";
 import useCart from "../../customHooks/useCart";
   
 
-function Items({itemList,dispatch}) {
+function Items({itemList,dispatch,categoryList}) {
 
   const location=useLocation();
-const query=new URLSearchParams(location.search);
-const searchTerm=query.get("search") || "";
+  const query=new URLSearchParams(location.search);
+  const searchTerm=query.get("search") || "";
+  const query1=new URLSearchParams(location.category);
+  const category=query.get("category") || ""; 
  
  const filteredItems = itemList.filter(item =>
   item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -26,7 +28,7 @@ const searchTerm=query.get("search") || "";
   return (
     <>
       <NavbarFood count={totalCartValue} />
-      
+       
      <div className="items-container">
   {filteredItems.map(item => (
     <ItemCards
@@ -36,6 +38,7 @@ const searchTerm=query.get("search") || "";
       cost={item.cost}
       qty={item.qty}
       onChange={updateQtyCounter}
+       
     />
   ))}
 </div>
