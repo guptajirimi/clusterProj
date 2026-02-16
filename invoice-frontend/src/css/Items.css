@@ -164,3 +164,47 @@
     align-items: center;
   }
 }
+/* Container that holds all categories */
+.category-wrapper {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap; /* moves to next line if needed */
+}
+
+/* Single category block */
+.imageItemCategory {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Circular image placeholder */
+.imageCircular {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #ff6b00; /* temporary color */
+  display: inline-block;
+}
+
+/* Category text */
+.itemCategoryName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+.selectedCategory {
+  background: #ff6b00;
+  padding: 6px 12px;
+  border-radius: 30px;
+}
+
+.selectedCategory .itemCategoryName {
+  color: white;
+}
+
+.selectedCategory .imageCircular {
+  background: white;
+}

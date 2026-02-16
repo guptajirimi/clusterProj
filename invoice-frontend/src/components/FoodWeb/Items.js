@@ -11,7 +11,8 @@ function Items({itemList,dispatch,categoryList}) {
   const query=new URLSearchParams(location.search);
   const searchTerm=query.get("search") || "";
   const query1=new URLSearchParams(location.category);
-  const category=query.get("category") || ""; 
+  const categoryNav=query.get("id") || ""; 
+ console.log(categoryNav);
  
  const filteredItems = itemList.filter(item =>
   item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -28,7 +29,23 @@ function Items({itemList,dispatch,categoryList}) {
   return (
     <>
       <NavbarFood count={totalCartValue} />
-       
+    <div className="category-wrapper">
+  {categoryList.map((item) => (
+    <div
+      key={item.id}
+      className={`imageItemCategory ${
+        item.id === Number(categoryNav) ? "selectedCategory" : ""
+      }`}
+    >
+      <span className="imageCircular"></span>
+      <span className="itemCategoryName">
+        {item.categoryName}
+      </span>
+    </div>
+  ))}
+</div>
+
+
      <div className="items-container">
   {filteredItems.map(item => (
     <ItemCards
