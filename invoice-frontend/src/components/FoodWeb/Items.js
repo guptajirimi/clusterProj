@@ -12,11 +12,21 @@ function Items({itemList,dispatch,categoryList}) {
   const searchTerm=query.get("search") || "";
   const query1=new URLSearchParams(location.category);
   const categoryNav=query.get("id") || ""; 
- console.log(categoryNav);
- 
- const filteredItems = itemList.filter(item =>
+  const categoryNavNames=query.get("category") || ""; 
+  let updatedItemList=itemList;
+ if(categoryNavNames)
+ {
+  
+      updatedItemList = itemList.filter(item =>
+        item.category==categoryNavNames
+);
+ }
+  
+      const filteredItems = updatedItemList.filter(item =>
   item.name.toLowerCase().includes(searchTerm.toLowerCase())
 );
+  
+ 
  
   const updateQtyCounter = (id, actionType) => {
     dispatch({
