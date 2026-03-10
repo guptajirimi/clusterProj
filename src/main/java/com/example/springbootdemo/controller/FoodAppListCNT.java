@@ -36,7 +36,7 @@ public class FoodAppListCNT {
          List<ItemListEntity> items= itemListRepo.findAll();
          List<OffersEntity> offers= offersRepo.findAll();
          List<CategoryListEntity> categories= categoryListRepo.findAll();
-          return null;
+          return new FoodAppFB(items,offers,categories);
     }
      
 

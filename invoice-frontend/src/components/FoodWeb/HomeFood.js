@@ -60,6 +60,7 @@ function HomeFood({categoryList}) {
            
 
         </div>
+         
 
       </div>
     </>
