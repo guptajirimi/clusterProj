@@ -1,13 +1,13 @@
 import React from "react";
-import itemImage from "../../images/food1.jpg";
+ 
 import { FaPlus, FaMinus } from "react-icons/fa";
 import "../../css/Items.css";
 
-function ItemCards({ id, name, cost, qty, onChange  }) {
+function ItemCards({ id, name, cost, qty, onChange ,image }) {
  
   return (
     <div className="itemsfood">
-     <img src={itemImage} alt={name} />
+     <img src={image} alt={name} />
       <div className="item-info">
         <span className="item-title">{name}</span>
         <span className="item-cost">₹{cost}</span>

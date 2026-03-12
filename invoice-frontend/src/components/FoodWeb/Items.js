@@ -65,7 +65,7 @@ function Items({itemList,dispatch,categoryList}) {
       cost={item.cost}
       qty={item.qty}
       onChange={updateQtyCounter}
-       
+       image={item.image}
     />
   ))}
 </div>

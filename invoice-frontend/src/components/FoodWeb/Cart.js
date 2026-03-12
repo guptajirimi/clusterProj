@@ -4,6 +4,7 @@ import NavbarFood from "./NavbarFood";
 import {Link } from "react-router-dom";
 import useCart from "../../customHooks/useCart";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery"; 
 const Cart = ({ itemList ,charges,selectedOffer}) => {
   
@@ -41,12 +42,12 @@ const handelPlaceOrder = () => {
     data: JSON.stringify(orderData),
 
     success: function (response) {
-      toast("Order Placed");
+      toast.success("Order Placed Successfully");
       console.log(response);
     },
 
     error: function (err) {
-      toast("Error Occurred");
+    toast.error("Error Occurred");
       console.log(err);
     }
   });
@@ -110,9 +111,13 @@ const handelPlaceOrder = () => {
           <strong>₹{grandTotal}</strong>
         </div>
       </div>
-      <div className="placeOrder">
-          <button className="primary" onClick={handelPlaceOrder}>Place Order</button>
-      </div>
+     <div className="placeOrder">
+  <button className="place-order-btn" onClick={handelPlaceOrder}>
+    Place Order
+  </button>
+</div>
+
+<ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 };

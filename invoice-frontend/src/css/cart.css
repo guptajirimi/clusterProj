@@ -120,3 +120,27 @@ body {
   font-weight: 600;
   font-size: 15px;
 }
+.placeOrder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.place-order-btn {
+  background: #ff6b00;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.place-order-btn:hover {
+  background: #e85f00;
+  transform: translateY(-2px);
+}

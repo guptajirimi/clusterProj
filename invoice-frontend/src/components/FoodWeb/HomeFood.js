@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/homeFood.css";
 import food1 from "../../images/food1.jpg";
 import food2 from "../../images/food2.jpg";
@@ -7,9 +7,30 @@ import FoodCategoriesCard from "./FoodCategoriesCard";
 import NavbarFood from "./NavbarFood";
 import useCart from "../../customHooks/useCart";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import FoodPopularCard from "./FoodPopularCard";
+import $ from "jquery";
 function HomeFood({categoryList}) {
-   
+   const[hotListFoodItem,setHotListFoodItem]=useState([]);
   const navigate=useNavigate();
+  useEffect(()=>{
+    $.ajax({
+      url:"http://localhost:90/foodAppList/hotListFoodItem",
+      type:"GET",
+      contentType:"JSON",
+      success: function(responce){
+          const data= responce.map(item=>({
+            id:item.id,
+            name:item.name
+         }))
+         setHotListFoodItem(data);
+      },
+      error:function(responce){
+        console.log("error");
+      }
+
+    })
+  },[]);
    return (
     <>
     <NavbarFood />
@@ -63,6 +84,16 @@ function HomeFood({categoryList}) {
          
 
       </div>
+
+
+      {/* =====================
+          Most Demanded items
+          ===================== */}
+          <div className="foodCategoryPopularSection">
+              {hotListFoodItem.map((item)=>(
+                <FoodPopularCard key={item.id} title={item.name}/>
+              ))}
+          </div>
     </>
   );
 }

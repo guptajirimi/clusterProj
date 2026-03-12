@@ -20,4 +20,5 @@ public class ItemListEntity {
     private int cost;
     private String category;
     private boolean featured;
+    private String image; 
 }
