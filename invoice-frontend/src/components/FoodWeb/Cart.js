@@ -3,7 +3,8 @@ import "../../css/cart.css";
 import NavbarFood from "./NavbarFood";
 import {Link } from "react-router-dom";
 import useCart from "../../customHooks/useCart";
-
+import { toast, ToastContainer } from "react-toastify";
+import $ from "jquery"; 
 const Cart = ({ itemList ,charges,selectedOffer}) => {
   
  const {subTotal} =useCart(itemList);
@@ -14,7 +15,45 @@ const Cart = ({ itemList ,charges,selectedOffer}) => {
     discount=selectedOffer.Discount;
   }
   const grandTotal = subTotal + charges.deliveryCharges + charges.govCharges-discount;
+const handelPlaceOrder = () => {
 
+  const orderItem = itemList.filter(item => item.qty > 0);
+
+  const orderData = {
+  items: orderItem.map(item => ({
+    itemId: item.id,
+    name: item.name,
+    cost: item.cost,
+    qty: item.qty,
+    total: item.cost * item.qty
+  })),
+  subTotal: subTotal,
+  deliveryCharges: charges.deliveryCharges,
+  govCharges: charges.govCharges,
+  discount: discount,
+  grandTotal: grandTotal
+};
+
+  $.ajax({
+    url: "http://localhost:90/foodAppList/insertOrder",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(orderData),
+
+    success: function (response) {
+      toast("Order Placed");
+      console.log(response);
+    },
+
+    error: function (err) {
+      toast("Error Occurred");
+      console.log(err);
+    }
+  });
+
+};
+
+ 
   return (
     <>
       <NavbarFood />
@@ -70,6 +109,9 @@ const Cart = ({ itemList ,charges,selectedOffer}) => {
           <strong>Total</strong>
           <strong>₹{grandTotal}</strong>
         </div>
+      </div>
+      <div className="placeOrder">
+          <button className="primary" onClick={handelPlaceOrder}>Place Order</button>
       </div>
     </>
   );
