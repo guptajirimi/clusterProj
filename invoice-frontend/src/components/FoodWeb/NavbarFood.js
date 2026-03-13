@@ -120,6 +120,13 @@ const openCloseStatus = function () {
           </Link>
         </div>
 
+         <div className="nav-item">
+          <FaTags />
+          <Link to="/Account">
+          <span>My Account</span>
+          </Link>
+        </div>
+
          
         {isloggedIn ? (
   <button onClick={() => navigate("/login")}>Logout</button>

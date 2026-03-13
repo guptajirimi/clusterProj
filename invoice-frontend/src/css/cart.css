@@ -144,3 +144,49 @@ body {
   background: #e85f00;
   transform: translateY(-2px);
 }
+.placeOrder{
+  display:flex;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.place-order-btn{
+  padding:12px 25px;
+  font-size:16px;
+  background:#ff4d4d;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.place-order-btn:hover{
+  background:#e60023;
+}
+
+/* ✈️ Plane animation */
+
+.planeAnimation{
+  position:fixed;
+  bottom:0;
+  left:0;
+  font-size:50px;
+  z-index:9999;
+  animation:flyPlane 2s linear forwards;
+}
+
+@keyframes flyPlane{
+
+  0%{
+    transform:translate(0,0) rotate(0deg);
+  }
+
+  50%{
+    transform:translate(50vw,-40vh) rotate(20deg);
+  }
+
+  100%{
+    transform:translate(100vw,-100vh) rotate(45deg);
+  }
+
+}

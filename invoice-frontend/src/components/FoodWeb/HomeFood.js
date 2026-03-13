@@ -74,7 +74,7 @@ function HomeFood({categoryList}) {
             doorstep in minutes.
           </p>
 
-          <button className="hero-btn">Explore Menu</button>
+          <button className="hero-btn" onClick={() => navigate("/Items")}>Explore Menu</button>
         </div>
 
         {/* Right Carousel */}
