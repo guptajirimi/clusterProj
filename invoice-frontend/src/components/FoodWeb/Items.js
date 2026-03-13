@@ -13,6 +13,8 @@ function Items({itemList,dispatch,categoryList}) {
   const query1=new URLSearchParams(location.category);
   const categoryNav=query.get("id") || ""; 
   const categoryNavNames=query.get("category") || ""; 
+  const params = new URLSearchParams(location.search);
+const itemId = params.get("itemId");
   let updatedItemList=itemList;
  if(categoryNavNames)
  {
@@ -21,6 +23,12 @@ function Items({itemList,dispatch,categoryList}) {
         item.category==categoryNavNames
 );
  }
+ if(itemId)
+{
+  updatedItemList = itemList.filter(item =>
+    item.id == itemId
+  );
+}
   
       const filteredItems = updatedItemList.filter(item =>
   item.name.toLowerCase().includes(searchTerm.toLowerCase())

@@ -21,6 +21,7 @@ import com.example.springbootdemo.entity.OrderItemEntity;
 import com.example.springbootdemo.repository.CategoryListRepo;
 import com.example.springbootdemo.repository.ItemListRepo;
 import com.example.springbootdemo.repository.OffersRepo;
+import com.example.springbootdemo.repository.OrderItemRepo;
 import com.example.springbootdemo.repository.OrderRepo;
  
 
@@ -37,6 +38,8 @@ public class FoodAppListCNT {
     CategoryListRepo categoryListRepo;
     @Autowired
     OrderRepo orderRepo;
+     @Autowired
+    OrderItemRepo orderItemRepo;
     @GetMapping("/initialItemList")
     public FoodAppFB getInitialItemList() {
          List<ItemListEntity> items= itemListRepo.findAll();
@@ -57,6 +60,18 @@ public String insertOrder(@RequestBody OrderEntity order) {
 
     return "Order Saved Successfully";
 }
-
-    
+@GetMapping("/hotListFoodItem")
+    public List<Object[]> hotListFoodItem() {
+          
+         return orderItemRepo.getPopularItemList();
+         
+            
+    }
+    @GetMapping("/leastOderedListFoodItem")
+    public List<Object[]> leastOderedListFoodItem() {
+          
+         return orderItemRepo.leastOderedListFoodItem();
+         
+            
+    }
 }

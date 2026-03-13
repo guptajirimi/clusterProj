@@ -1,10 +1,11 @@
 import React from "react";
+import "../../css/homeFood.css";
 
-const FoodPopularCard=({title,onClick})=>{
+const FoodPopularCard=({id,title,image,onClick})=>{
 return(
     <>
-        <div className="foodPopularCard" >
-             
+        <div className="foodPopularCard" onClick={onClick}>
+            <img src={image} alt="title"/>
         </div>
     </>
 )

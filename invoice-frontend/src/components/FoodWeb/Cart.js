@@ -26,7 +26,8 @@ const handelPlaceOrder = () => {
     name: item.name,
     cost: item.cost,
     qty: item.qty,
-    total: item.cost * item.qty
+    total: item.cost * item.qty,
+    image:item.image
   })),
   subTotal: subTotal,
   deliveryCharges: charges.deliveryCharges,

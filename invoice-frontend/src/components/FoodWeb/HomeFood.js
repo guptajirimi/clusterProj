@@ -12,6 +12,7 @@ import FoodPopularCard from "./FoodPopularCard";
 import $ from "jquery";
 function HomeFood({categoryList}) {
    const[hotListFoodItem,setHotListFoodItem]=useState([]);
+   const[leastOderedListFoodItem,setLeastOderedListFoodItem]=useState([]);
   const navigate=useNavigate();
   useEffect(()=>{
     $.ajax({
@@ -19,11 +20,33 @@ function HomeFood({categoryList}) {
       type:"GET",
       contentType:"JSON",
       success: function(responce){
-          const data= responce.map(item=>({
-            id:item.id,
-            name:item.name
-         }))
+         const data = responce.map(item => ({
+    id: item[0],
+    name: item[1],
+    image: item[2],
+    qty: item[3]
+  }));
          setHotListFoodItem(data);
+      },
+      error:function(responce){
+        console.log("error");
+      }
+
+    })
+  },[]);
+  useEffect(()=>{
+    $.ajax({
+      url:"http://localhost:90/foodAppList/leastOderedListFoodItem",
+      type:"GET",
+      contentType:"JSON",
+      success: function(responce){
+         const data = responce.map(item => ({
+    id: item[0],
+    name: item[1],
+    image: item[2],
+    qty: item[3]
+  }));
+         setLeastOderedListFoodItem(data);
       },
       error:function(responce){
         console.log("error");
@@ -90,9 +113,24 @@ function HomeFood({categoryList}) {
           Most Demanded items
           ===================== */}
           <div className="foodCategoryPopularSection">
-              {hotListFoodItem.map((item)=>(
-                <FoodPopularCard key={item.id} title={item.name}/>
+              {hotListFoodItem.map(item=> (
+                <FoodPopularCard key={item.id}  id={item.id} title={item.name} image={item.image} 
+                onClick={() => navigate(`/Items?itemId=${item.id}`)}
+                />
               ))}
+               
+          </div>
+
+          {/* =====================
+          Least Ordered items
+          ===================== */}
+          <div className="foodCategoryPopularSection">
+              {leastOderedListFoodItem.map(item=> (
+                <FoodPopularCard key={item.id}  id={item.id} title={item.name} image={item.image}
+                onClick={() => navigate(`/Items?itemId=${item.id}`)}
+                />
+              ))}
+               
           </div>
     </>
   );

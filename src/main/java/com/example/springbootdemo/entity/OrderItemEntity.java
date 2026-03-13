@@ -18,7 +18,7 @@ public class OrderItemEntity {
     private double cost;
     private int qty;
     private double total;
-
+   private String image; 
     @ManyToOne
     @JoinColumn(name="order_id")
     private OrderEntity order;
