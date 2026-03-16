@@ -1,6 +1,9 @@
 package com.example.springbootdemo.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,7 +23,12 @@ public class OrderEntity {
     private double govCharges;
     private double discount;
     private double grandTotal;
+    private Long userId;
 
+    @CreationTimestamp
+    @Column(name = "entrydate")
+    private LocalDateTime entrydate;
+    
    @OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItemEntity> items;
      

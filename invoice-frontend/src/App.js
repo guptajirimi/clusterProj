@@ -66,11 +66,12 @@ const [categoryList, setCategoryList] = useState([]);
         
          
         <Route path="home" element={<HomeFood  categoryList={categoryList}/>} />
-          <Route path="/" element={<HomeFood categoryList={categoryList} />} />	
+          <Route path="/home" element={<HomeFood categoryList={categoryList} />} />	
           <Route path="Items" element={<Items itemList={itemList} dispatch={dispatch} categoryList={categoryList}/>} />
           <Route path="Cart" element={<Cart itemList={itemList} charges={charges} selectedOffer={selectedOffer}/>} />
           <Route path="/Offers" element={<Offers  offers={offers}  dispatch={dispatchOffer} charges={charges}/>} />
           <Route path="/Account" element={<MyAccount/>} />
+         <Route path="/" element={<Login/>} />
          <Route path="login" element={<Login/>} />
 
       </Routes>

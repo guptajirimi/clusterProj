@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springbootdemo.entity.LoginEntity;
 import com.example.springbootdemo.repository.LoginRepo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("authentication")
 public class Login {
@@ -19,7 +21,7 @@ public class Login {
      
     @ResponseBody
     @RequestMapping("/login/{username}/{password}")
-    public String login(@PathVariable String username, @PathVariable String password) {
+    public String login(@PathVariable String username, @PathVariable String password, HttpSession session) {
 
         // Find user by username
         LoginEntity user = loginRepo.findByUsername(username);
@@ -29,6 +31,7 @@ public class Login {
         }
 
         if (user.getPassword().equals(password)) {
+              session.setAttribute("userId", user.getUserid());
             return "  Login Successfully";
         } else {
             return "  Invalid password";
@@ -56,4 +59,5 @@ public class Login {
 
         return "  User Successfully Registered";
     }
+    
 }

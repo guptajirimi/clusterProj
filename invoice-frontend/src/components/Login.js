@@ -39,10 +39,15 @@ const Login = () => {
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify({ username, password }),
+      xhrFields: {
+    withCredentials: true
+  },
+
+  crossDomain: true,
       success: function (response) {
         toast.success(response);
          setTimeout(() => {
-          navigate("/dashboard/home");
+          navigate("/home");
         }, 1000);
       },
       error: function (response) {

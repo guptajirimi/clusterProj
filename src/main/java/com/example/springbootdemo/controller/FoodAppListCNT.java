@@ -23,6 +23,8 @@ import com.example.springbootdemo.repository.ItemListRepo;
 import com.example.springbootdemo.repository.OffersRepo;
 import com.example.springbootdemo.repository.OrderItemRepo;
 import com.example.springbootdemo.repository.OrderRepo;
+
+import jakarta.servlet.http.HttpSession;
  
 
  
@@ -49,11 +51,15 @@ public class FoodAppListCNT {
     }
    
 @PostMapping("/insertOrder")
-public String insertOrder(@RequestBody OrderEntity order) {
+public String insertOrder(@RequestBody OrderEntity order, HttpSession session) {
 
-    
+    Long userId = (Long) session.getAttribute("userId");
+    System.out.println("userId"+userId);  
+      order.setUserId(userId);
+
     for(OrderItemEntity item : order.getItems()) {
         item.setOrder(order);
+         item.setUserId(userId);
     }
 
     orderRepo.save(order);
@@ -61,17 +67,17 @@ public String insertOrder(@RequestBody OrderEntity order) {
     return "Order Saved Successfully";
 }
 @GetMapping("/hotListFoodItem")
-    public List<Object[]> hotListFoodItem() {
-          
-         return orderItemRepo.getPopularItemList();
-         
-            
+    public List<Object[]> hotListFoodItem() {  
+         return orderItemRepo.getPopularItemList();      
     }
     @GetMapping("/leastOderedListFoodItem")
     public List<Object[]> leastOderedListFoodItem() {
-          
-         return orderItemRepo.leastOderedListFoodItem();
-         
-            
+         return orderItemRepo.leastOderedListFoodItem();    
+    }
+    @GetMapping("/yourOdersList")
+    public List<Object[]> yourOdersList(HttpSession session) { 
+        Long userId = (Long) session.getAttribute("userId"); 
+        System.out.println("UserId from session: " + userId);
+         return orderItemRepo.yourOdersList(userId);      
     }
 }

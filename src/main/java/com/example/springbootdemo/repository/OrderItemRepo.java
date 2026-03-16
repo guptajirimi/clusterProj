@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.springbootdemo.entity.OrderItemEntity;
 
@@ -35,5 +36,20 @@ WHERE a.id NOT IN (
 LIMIT 5
 """, nativeQuery = true)
 List<Object[]> leastOderedListFoodItem();
+@Query(value = """
+SELECT 
+o.grand_total,
+oi.item_id,
+oi.qty,
+oi.name,
+o.entrydate,
+oi.image
+FROM hstt_orders_item_dtls oi
+JOIN hstt_orders_dtls o 
+ON oi.order_id = o.id
+WHERE oi.user_id = :userId
+ORDER BY o.entrydate DESC
+""", nativeQuery = true)
+List<Object[]> yourOdersList(@Param("userId") Long userId);
    }
  

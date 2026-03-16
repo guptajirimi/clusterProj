@@ -55,14 +55,19 @@ if(subTotal < 150){
 
     $.ajax({
       url: "http://localhost:90/foodAppList/insertOrder",
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify(orderData),
+  type: "POST",
+  contentType: "application/json",
+  data: JSON.stringify(orderData),
 
+  xhrFields: {
+    withCredentials: true
+  },
+
+  crossDomain: true,
       success: function (response) {
 
         setTimeout(() => {
-          toast.success("Order Placed Successfully 🎉");
+          toast.success("Order Placed Successfully ");
           setFlyPlane(false);
         }, 2000);
 

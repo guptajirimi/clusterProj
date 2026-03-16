@@ -51,7 +51,12 @@ const openCloseStatus = function () {
     return "Closed";
   }
 };
+const handleLogout = () => {
 
+   
+ window.location.href = "/login";
+
+};
 
   return (
     <div className="navbar">
@@ -129,9 +134,9 @@ const openCloseStatus = function () {
 
          
         {isloggedIn ? (
-  <button onClick={() => navigate("/login")}>Logout</button>
+  <button onClick={handleLogout}>Logout</button>
 ) : (
-  <button onClick={() => navigate("/login")}>Login</button>
+  <button onClick={handleLogout}>Login</button>
 )}
 
 
