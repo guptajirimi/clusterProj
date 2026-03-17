@@ -208,3 +208,29 @@
 .selectedCategory .imageCircular {
   background: white;
 }
+.itemsfood{
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+/* Strong bounce effect */
+.itemsfood.animate{
+  animation: bounceCart 0.35s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+@keyframes bounceCart {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  70%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+ 
+.itemsfood svg{
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.itemsfood svg:active{
+  transform: scale(1.3);
+}

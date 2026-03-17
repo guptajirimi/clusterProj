@@ -18,6 +18,7 @@ import useCart from './customHooks/useCart';
 import offerReducer from './reducers/offerReducer';
 import $ from "jquery";
 import MyAccount from './components/FoodWeb/MyAccount';
+import WishList from './components/FoodWeb/WishList';
 function App() {
  const [initialItemList, setInitialItemList] = useState([]);
 const [initialOffers, setInitialOffers] = useState([]);
@@ -73,6 +74,7 @@ const [categoryList, setCategoryList] = useState([]);
           <Route path="/Account" element={<MyAccount/>} />
          <Route path="/" element={<Login/>} />
          <Route path="login" element={<Login/>} />
+         <Route path='/wishlist' element={<WishList/>} />
 
       </Routes>
     </Router>

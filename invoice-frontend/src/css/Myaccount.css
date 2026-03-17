@@ -53,3 +53,19 @@
     font-weight: bold;
     color: #ff4d4d;
 }
+.reorderBtn{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.reorderBtn:hover{
+    background-color: #e63c3c;
+}

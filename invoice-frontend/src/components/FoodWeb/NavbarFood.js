@@ -10,7 +10,8 @@ import {
   FaTags,
   FaUserShield,
   FaUser,
-  FaReact
+  FaReact,
+  FaHeart
 } from "react-icons/fa";
  
 import {Link, Navigate, useNavigate} from "react-router-dom";
@@ -124,7 +125,12 @@ const handleLogout = () => {
           <span>Offers</span>
           </Link>
         </div>
-
+    <div className="nav-item">
+         <FaHeart />
+          <Link to="/wishlist">
+          <span>Wishlist</span>
+          </Link>
+        </div>
          <div className="nav-item">
           <FaTags />
           <Link to="/Account">

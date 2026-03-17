@@ -43,6 +43,12 @@ const itemId = params.get("itemId");
     });
    
 };
+const onChangeWishlist=(id,actionType)=>{
+  dispatch({
+    type:actionType,
+    id:id
+  })
+};
     const {totalCartValue} =useCart(itemList);
   return (
     <>
@@ -74,6 +80,7 @@ const itemId = params.get("itemId");
       qty={item.qty}
       onChange={updateQtyCounter}
        image={item.image}
+       onWishlist={onChangeWishlist}
     />
   ))}
 </div>

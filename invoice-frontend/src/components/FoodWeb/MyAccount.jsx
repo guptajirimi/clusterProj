@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
 import "../../css/Myaccount.css";
+import { useNavigate } from "react-router-dom";
+  
 const MyAccount = () => {
-
+ const navigate=useNavigate();
   const [yourOdersList, setYourOdersList] = useState([]);
     useEffect(()=>{
          console.log("MyAccount page loaded");
@@ -30,6 +32,10 @@ const MyAccount = () => {
 
     })
   },[]);
+  const handelReorder=(id)=>
+    {
+        navigate(`/Items?itemId=${id}`)
+    }
   return (
     <> 
       <div className="yourOdersCard">
@@ -50,7 +56,13 @@ const MyAccount = () => {
     <span className="date">{item.date}</span>
     <span className="total">₹{item.total}</span>
   </div>
-
+       <button 
+  className="primary reorderBtn" 
+  onClick={() => handelReorder(item.id)}
+>
+  <i className="fa fa-undo"></i>
+  <span>Reorder</span>
+</button>
 </div>
 
         ))}
