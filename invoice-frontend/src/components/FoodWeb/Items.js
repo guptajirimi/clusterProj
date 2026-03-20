@@ -43,11 +43,11 @@ const itemId = params.get("itemId");
     });
    
 };
-const onChangeWishlist=(id,actionType)=>{
+const onChangeWishlist = (id, actionType) => {
   dispatch({
-    type:actionType,
-    id:id
-  })
+    type: actionType,
+    id: id
+  });
 };
     const {totalCartValue} =useCart(itemList);
   return (
