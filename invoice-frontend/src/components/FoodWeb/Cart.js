@@ -35,6 +35,8 @@ if(subTotal < 150){
     toast.warning("Minimum order value must be ₹150 to place order");
     return;
   }
+  toast.info("Processing Payment...");
+  setTimeout(()=>{
     setFlyPlane(true);
 
     const orderData = {
@@ -81,7 +83,8 @@ if(subTotal < 150){
       }
     });
 
-  };
+  },2000);
+  }
 
   return (
     <>

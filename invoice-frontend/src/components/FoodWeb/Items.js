@@ -3,6 +3,7 @@ import NavbarFood from "./NavbarFood";
 import "../../css/Items.css";
 import { useLocation } from "react-router-dom";
 import useCart from "../../customHooks/useCart";
+import { useState } from "react";
   
 
 function Items({itemList,dispatch,categoryList}) {
@@ -16,6 +17,10 @@ function Items({itemList,dispatch,categoryList}) {
   const params = new URLSearchParams(location.search);
 const itemId = params.get("itemId");
   let updatedItemList=itemList;
+  const [costFilter, setCostFilter] = useState(0);
+const [ratingFilter, setRatingFilter] = useState(0);
+const [distanceFilter, setDistanceFilter] = useState(0);
+
  if(categoryNavNames)
  {
   
@@ -50,6 +55,29 @@ const onChangeWishlist = (id, actionType) => {
   });
 };
     const {totalCartValue} =useCart(itemList);
+    let filtersSetted = [...filteredItems];
+filtersSetted.sort((a, b) => {
+	if (costFilter === 1 && a.cost !== b.cost) {
+		return a.cost - b.cost;
+	}
+	  if (costFilter === 2 && a.cost !== b.cost) {
+		return b.cost - a.cost;
+	}
+	  if (ratingFilter === 1 && a.rating !== b.rating) {
+		return a.rating - b.rating;
+	}
+	  if (ratingFilter === 2 && a.rating !== b.rating) {
+		return b.rating - a.rating;
+	}
+	  if (distanceFilter === 1 && a.distance !== b.distance) {
+		return a.distance - b.distance;
+	}
+	  if (distanceFilter === 2 && a.distance !== b.distance) {
+		return b.distance - a.distance;
+	}
+	return 0;
+});
+
   return (
     <>
       <NavbarFood count={totalCartValue} />
@@ -66,12 +94,32 @@ const onChangeWishlist = (id, actionType) => {
         {item.categoryName}
       </span>
     </div>
+
   ))}
+</div>
+<div className="filterOnItemList">
+	<label>Sort:</label><div className="filtersCostRatingDistance">
+		<select id="cost" name="cost" onChange ={(e) => setCostFilter(Number(e.target.value))}>
+			<option value={0}>Cost</option>
+			<option value={1}>low-high</option>
+			<option value={2}>high-low</option>
+		</select>
+		<select id="rating" name="rating" onChange ={(e) => setRatingFilter(Number(e.target.value))}>
+			<option value={0}>Rating</option>
+			<option value={1}>low-high</option>
+			<option value={2}>high-low</option>
+		</select>
+		<select id="distance" name="distance" onChange ={(e) => setDistanceFilter(Number(e.target.value))}>
+			<option value={0}>Distance</option>
+			<option value={1}>Near-Far</option>
+			<option value={2}>Far-Near</option>
+		</select>
+	</div>
 </div>
 
 
      <div className="items-container">
-  {filteredItems.map(item => (
+  {filtersSetted.map(item => (
     <ItemCards
       key={item.id}
       id={item.id}
